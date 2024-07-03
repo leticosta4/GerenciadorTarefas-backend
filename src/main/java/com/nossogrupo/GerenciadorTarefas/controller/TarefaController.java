@@ -9,19 +9,24 @@ import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/tarefas")
+@RequestMapping("/")
 public class TarefaController {
     @Autowired
     private TarefaRepository tarefaRepository;
 
-    @GetMapping
-    public ArrayList<Tarefa> listarTarefas() {
-        return (ArrayList<Tarefa>) tarefaRepository.findAll();
-    }
+    // @GetMapping
+    // public ArrayList<Tarefa> listarTarefas() {
+    //     return (ArrayList<Tarefa>) tarefaRepository.findAll();
+    // }
 
     @PostMapping
     public Tarefa criarTarefa(@RequestBody Tarefa tarefa) {
         return tarefaRepository.save(tarefa);
+    }
+
+    @GetMapping("/tarefas")
+    public String home() {
+        return "Bem-vindo ao Gerenciador de Tarefas!";
     }
 
     @PutMapping("/{id}")
