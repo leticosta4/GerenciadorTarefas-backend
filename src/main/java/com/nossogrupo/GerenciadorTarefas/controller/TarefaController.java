@@ -24,8 +24,13 @@ public class TarefaController {
         return tarefaRepository.save(tarefa);
     }
 
-    @GetMapping("/tarefas")
+    @GetMapping("/")
     public String home() {
+        return "oi!";
+    }
+
+    @GetMapping("/tarefas")
+    public String homeTarefas() {
         return "Bem-vindo ao Gerenciador de Tarefas!";
     }
 
