@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import org.springframework.cglib.core.Local;
 
 @Entity
-public class User {
+public class TaskUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; 
@@ -19,7 +19,7 @@ public class User {
     private String senha;
     private ArrayList <Tarefa> listaUserTasks; //ver como tratar isso melhor depois 
 
-    public User(Long id, String nome, String email, String senha){
+    public TaskUser(Long id, String nome, String email, String senha){
         this.id = id; ///nao sei se devemos tratar aqui ou n essa atribuição do id
         this.nome = nome;
         this.email = email;

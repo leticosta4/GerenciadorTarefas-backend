@@ -1,50 +1,46 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
-import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
+// import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/")
-public class TarefaController {
-    @Autowired
-    private TarefaRepository tarefaRepository;
+public class TarefaController { 
 
-    // @GetMapping
-    // public ArrayList<Tarefa> listarTarefas() {
-    //     return (ArrayList<Tarefa>) tarefaRepository.findAll();
-    // }
+    //talvez precise rotas duplicadas sem a query tratada
 
-    @PostMapping
-    public Tarefa criarTarefa(@RequestBody Tarefa tarefa) {
-        return tarefaRepository.save(tarefa);
+    @GetMapping("/tasks/{titulo}") 
+    public String task(@PathVariable String titulo) {
+        return "mostrando info da task clicada: " + titulo;
     }
 
-    @GetMapping("/")
-    public String home() {
-        return "oi!";
+    //rotas-metodos especificas das tasks 
+    @GetMapping("/criar_task/{titulo}") 
+    public String criarTask(@PathVariable String titulo) {
+        return "criando uma task: " + titulo;
     }
 
-    @GetMapping("/tarefas")
-    public String homeTarefas() {
-        return "Bem-vindo ao Gerenciador de Tarefas!";
+    @GetMapping("/remover_task/{titulo}") 
+    public String removerTask(@PathVariable String titulo) {
+        return "removendo uma task: " + titulo;
     }
 
-    @PutMapping("/{id}")
-    public Tarefa atualizarTarefa(@PathVariable Long id, @RequestBody Tarefa tarefaAtualizada) {
-        Tarefa tarefa = tarefaRepository.findById(id).orElseThrow();
-        tarefa.setTitulo(tarefaAtualizada.getTitulo());
-        tarefa.setDescricao(tarefaAtualizada.getDescricao());
-        // tarefa.setConcluida(tarefaAtualizada.isConcluida());
-        return tarefaRepository.save(tarefa);
+    @GetMapping("/editar_task/{titulo}") 
+    public String editarTask(@PathVariable String titulo) {
+        return "editando uma task: " + titulo;
     }
 
-    @DeleteMapping("/{id}")
-    public void deletarTarefa(@PathVariable Long id) {
-        tarefaRepository.deleteById(id);
+    @GetMapping("/filtrando_tasks") 
+    public String filtrarTrasks() {
+        return "filtrando as tasks";
+    }
+
+    //alguns testes de rota com atributo especifico da task
+    @PostMapping("/task")
+    public Tarefa task(@RequestBody Tarefa t){
+        return t;
     }
 }
