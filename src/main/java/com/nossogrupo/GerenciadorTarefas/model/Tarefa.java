@@ -6,6 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
 import java.time.LocalDate;
 
 import org.springframework.cglib.core.Local;
@@ -14,17 +19,22 @@ import org.springframework.cglib.core.Local;
 public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String titulo;
     private String descricao;
     private String status;
-    private LocalDate dataCriacao; //setar um default como data atual
+
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate dataCriacao;
     private LocalDate dataFinal;
+
     private String corFundo; //setar um default caso seja nulo
     private String local;
     //ver como vamos tratar o anexo de imagem depois
 
-    public Tarefa(Long id, String titulo, String descricao, String status, int anoCriacao, int mesCriacao, int diaCriacao, int anoFinal, int mesFinal, int diaFinal, String corFundo, String local){
+    public Tarefa() {} //construtor padrao jpa
+
+    public Tarefa(int id, String titulo, String descricao, String status, int anoCriacao, int mesCriacao, int diaCriacao, int anoFinal, int mesFinal, int diaFinal, String corFundo, String local){
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -36,11 +46,11 @@ public class Tarefa {
     }
 
 
-    public Long getId(){
+    public int getId(){
         return this.id;
     }
 
-    public void setId(Long id){
+    public void setId(int id){
         this.id = id;
     }
     

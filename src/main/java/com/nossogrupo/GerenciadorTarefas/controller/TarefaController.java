@@ -39,7 +39,7 @@ public class TarefaController {
     }
 
     //alguns testes de rota com atributo especifico da task
-    @PostMapping("/task")
+    @PostMapping("/tarefa")
     public Tarefa task(@RequestBody Tarefa t){
         return t;
     }
