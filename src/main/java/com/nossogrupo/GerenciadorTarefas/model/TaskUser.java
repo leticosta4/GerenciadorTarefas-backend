@@ -4,15 +4,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.util.ArrayList;
 
 import org.springframework.cglib.core.Local;
 
 @Entity
+@Table(name = "task_user")
 public class TaskUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; 
+    private Long id; 
     private String nome;
     private String email;
     private String senha;
@@ -20,7 +23,7 @@ public class TaskUser {
 
     public TaskUser() {} //construtor padrao jpa
 
-    public TaskUser(int id, String nome, String email, String senha){
+    public TaskUser(Long id, String nome, String email, String senha){
         this.id = id; ///nao sei se devemos tratar aqui ou n essa atribuição do id
         this.nome = nome;
         this.email = email;
@@ -28,11 +31,11 @@ public class TaskUser {
         //ver como tratar o arraylist
     }
 
-    public int getId(){
+    public Long getId(){
         return this.id;
     }
 
-    public void setId(int id){
+    public void setId(Long id){
         this.id = id;
     }
     

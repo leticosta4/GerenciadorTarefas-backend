@@ -1,9 +1,9 @@
 package com.nossogrupo.GerenciadorTarefas.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
 
-public interface TaskUserRepository extends JpaRepository<TaskUser, Integer>{
+public interface TaskUserRepository extends CrudRepository<TaskUser, Long>{
     
 }

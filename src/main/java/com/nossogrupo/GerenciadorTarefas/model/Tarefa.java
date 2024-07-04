@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -16,10 +17,11 @@ import java.time.LocalDate;
 import org.springframework.cglib.core.Local;
 
 @Entity
+@Table(name = "tarefa")
 public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String titulo;
     private String descricao;
     private String status;
@@ -34,7 +36,7 @@ public class Tarefa {
 
     public Tarefa() {} //construtor padrao jpa
 
-    public Tarefa(int id, String titulo, String descricao, String status, int anoCriacao, int mesCriacao, int diaCriacao, int anoFinal, int mesFinal, int diaFinal, String corFundo, String local){
+    public Tarefa(Long id, String titulo, String descricao, String status, int anoCriacao, int mesCriacao, int diaCriacao, int anoFinal, int mesFinal, int diaFinal, String corFundo, String local){
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -46,11 +48,11 @@ public class Tarefa {
     }
 
 
-    public int getId(){
+    public Long getId(){
         return this.id;
     }
 
-    public void setId(int id){
+    public void setId(Long id){
         this.id = id;
     }
     
