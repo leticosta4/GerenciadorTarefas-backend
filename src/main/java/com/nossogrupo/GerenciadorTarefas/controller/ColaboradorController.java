@@ -16,7 +16,7 @@ public class ColaboradorController {
         return "sobre os programadores";
     }
 
-    @GetMapping("/add_colaborador") 
+    @PostMapping("/add_colaborador") 
     public Colaborador criarColaborador(@RequestBody Colaborador novoColaborador) {
         System.out.println("adicionando um colaborador");
 

@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.cglib.core.Local;
 
@@ -23,12 +24,12 @@ public class TaskUser {
     private String senha;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private ArrayList <Tarefa> listaTarefasUser; 
+    private List<Tarefa> listaTarefasUser = new ArrayList<>();
 
     public TaskUser() {} //construtor padrao jpa
 
     public TaskUser(Long user_id, String nome, String email, String senha){
-        this.user_id = user_id; ///nao sei se devemos tratar aqui ou n essa atribuição do id
+        this.user_id = user_id; 
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -67,12 +68,11 @@ public class TaskUser {
         this.senha = senha;
     }
 
-    public ArrayList<Tarefa> getListaTarefasUser() {
+    public List<Tarefa> getListaTarefasUser() {
         return listaTarefasUser;
     }
 
-    // Setter para o ArrayList
-    public void setListaTarefasUser(ArrayList<Tarefa> listaTarefasUser) {
+    public void setListaTarefasUser(List<Tarefa> listaTarefasUser) {
         this.listaTarefasUser = listaTarefasUser;
     }
 }

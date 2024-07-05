@@ -1,9 +1,12 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
+import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
 import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
+import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
 
 
 @RestController
@@ -12,12 +15,16 @@ public class TarefaController {
     @Autowired 
     private TarefaRepository acaoTarefa; //objeto para excucao dos metodos 
 
+    @Autowired
+    private TaskUserRepository acaoUser; //teste
+
     //USAR POST EM TODAS AS ROTAS QUE PRECISEM DE DADOS SEM SER VIA URL
 
     @GetMapping("/atividades")
-    public String atividades() {
-        //provavelmente usar o findall do repository da tarefa
-        return "Bem-vindo ao Gerenciador de Tarefas!";
+    public ArrayList<Tarefa> atividades() {
+        System.out.println("Bem-vindo ao Gerenciador de Tarefas!");
+
+        return acaoTarefa.findAll();
     }
 
     @GetMapping("/tasks/{titulo}") 
@@ -26,11 +33,25 @@ public class TarefaController {
     }
 
     //rotas-metodos especificas das tasks 
-    @GetMapping("/criar_task") 
+    @PostMapping("/criar_task") 
     public Tarefa criarTask(@RequestBody Tarefa novaTarefa) {
         System.out.println("criando uma task");
-
-        //implementar dpeois talvez com funcoes extras
+        System.out.println("JSON recebido: " + novaTarefa.toString());
+        
+        TaskUser user = novaTarefa.getUser();
+        if (user != null) {
+            Long userId = user.getUserId();
+            if (userId != null) {
+                System.out.println("ID do usuário recebido: " + userId);
+                TaskUser usuarioDaVez = acaoUser.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId));
+                novaTarefa.setUser(usuarioDaVez);
+            } else {
+                throw new RuntimeException("ID do usuário não pode ser nulo.");
+            }
+        } else {
+            throw new RuntimeException("Usuário não pode ser nulo.");
+        }
 
         return acaoTarefa.save(novaTarefa);
     }

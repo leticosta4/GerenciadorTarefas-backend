@@ -10,10 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-
 import java.time.LocalDate;
 
 import org.springframework.cglib.core.Local;
@@ -27,22 +23,19 @@ public class Tarefa {
     private String titulo;
     private String descricao;
     private String status;
-
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate dataCriacao;
     private LocalDate dataFinal;
-
-    private String corFundo; //setar um default caso seja nulo
+    private String corFundo; 
     private String local;
     //ver como vamos tratar o anexo de imagem depois
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "userId")
     private TaskUser user; //chave estrangeira
 
     public Tarefa() {} //construtor padrao jpa
 
-    public Tarefa(Long tarefa_id, String titulo, String descricao, String status, String dataCriacao, String dataFinal, String corFundo, String local){
+    public Tarefa(Long tarefa_id, String titulo, String descricao, String status, String dataCriacao, String dataFinal, String corFundo, String local, TaskUser user){
         this.tarefa_id = tarefa_id;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -51,6 +44,7 @@ public class Tarefa {
         this.dataFinal = LocalDate.parse(dataFinal);
         this.corFundo = corFundo;
         this.local = local;
+        this.user = user;
     }
 
 
