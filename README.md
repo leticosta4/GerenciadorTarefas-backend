@@ -21,3 +21,7 @@ Banco de dados MySQL
 - Spring Boot Extension Pack
 - Thunder Client
 - MySQL (A do _Weijan Chen_)
+
+## Sobre o _import org.springframework.cglib.core.Local_
+Usado para trabalhar com localizações ou contextos locais específicos dentro de um sistema que faz uso do Spring Framework e da biblioteca CGLIB.
+Essa biblioteca CGLIB (Code Generation Library) é frequentemente usada no ecossistema Spring para gerar proxies dinâmicos e realizar aprimoramentos de código em tempo de execução. A classe Local em particular pode estar envolvida em manipulação de contexto de execução ou gerenciamento de informações locais relacionadas à execução de código dinâmico.

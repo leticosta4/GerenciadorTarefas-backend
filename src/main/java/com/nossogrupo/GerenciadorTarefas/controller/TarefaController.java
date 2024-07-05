@@ -1,8 +1,6 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-// import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
 import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 

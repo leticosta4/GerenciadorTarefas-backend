@@ -36,13 +36,13 @@ public class Tarefa {
 
     public Tarefa() {} //construtor padrao jpa
 
-    public Tarefa(Long id, String titulo, String descricao, String status, int anoCriacao, int mesCriacao, int diaCriacao, int anoFinal, int mesFinal, int diaFinal, String corFundo, String local){
+    public Tarefa(Long id, String titulo, String descricao, String status, String dataCriacao, String dataFinal, String corFundo, String local){
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.status = status;
-        this.dataCriacao = LocalDate.of(anoCriacao, mesCriacao, diaCriacao);
-        this.dataFinal = LocalDate.of(anoFinal, mesFinal, diaFinal);
+        this.dataCriacao = LocalDate.parse(dataCriacao);
+        this.dataFinal = LocalDate.parse(dataFinal);
         this.corFundo = corFundo;
         this.local = local;
     }
@@ -84,11 +84,11 @@ public class Tarefa {
         return this.dataCriacao;
     }
 
-    public void setDataCriacao(int ano, int mes, int data){
+    public void setDataCriacao(String dataCriacao){
         if (getDataCriacao() == null){
             this.dataCriacao = LocalDate.now(); //talvez aqui não sei
         } else {
-            this.dataCriacao =  LocalDate.of(ano, mes, data);
+            this.dataCriacao =  LocalDate.parse(dataCriacao);
         }
     }
 
@@ -96,8 +96,8 @@ public class Tarefa {
         return this.dataFinal;
     }
 
-    public void setDataFinal(int ano, int mes, int data){
-        this.dataFinal =  LocalDate.of(ano, mes, data);
+    public void setDataFinal(String dataFinal){
+        this.dataFinal =  LocalDate.parse(dataFinal);
     }
 
     public String getCorFundo(){
