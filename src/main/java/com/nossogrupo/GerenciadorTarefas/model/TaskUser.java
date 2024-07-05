@@ -4,7 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.CascadeType;
 
 import java.util.ArrayList;
 
@@ -15,28 +17,30 @@ import org.springframework.cglib.core.Local;
 public class TaskUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private Long user_id; 
     private String nome;
     private String email;
     private String senha;
-    private ArrayList <Tarefa> listaUserTasks; //ver como tratar isso melhor depois 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ArrayList <Tarefa> listaTarefasUser; 
 
     public TaskUser() {} //construtor padrao jpa
 
-    public TaskUser(Long id, String nome, String email, String senha){
-        this.id = id; ///nao sei se devemos tratar aqui ou n essa atribuição do id
+    public TaskUser(Long user_id, String nome, String email, String senha){
+        this.user_id = user_id; ///nao sei se devemos tratar aqui ou n essa atribuição do id
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        //ver como tratar o arraylist
+        this.listaTarefasUser = new ArrayList<>();
     }
 
-    public Long getId(){
-        return this.id;
+    public Long getUserId(){
+        return this.user_id;
     }
 
-    public void setId(Long id){
-        this.id = id;
+    public void setUserId(Long user_id){
+        this.user_id = user_id;
     }
     
     public String getNome(){
@@ -63,12 +67,12 @@ public class TaskUser {
         this.senha = senha;
     }
 
-    public ArrayList<Tarefa> getListaUserTasks() {
-        return listaUserTasks;
+    public ArrayList<Tarefa> getListaTarefasUser() {
+        return listaTarefasUser;
     }
 
     // Setter para o ArrayList
-    public void setListaUserTasks(ArrayList<Tarefa> listaUserTasks) {
-        this.listaUserTasks = listaUserTasks;
+    public void setListaTarefasUser(ArrayList<Tarefa> listaTarefasUser) {
+        this.listaTarefasUser = listaTarefasUser;
     }
 }

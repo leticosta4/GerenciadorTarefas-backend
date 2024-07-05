@@ -3,7 +3,6 @@ package com.nossogrupo.GerenciadorTarefas.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
-// import com.nossogrupo.GerenciadorTarefas.repository.UserRepository;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
 
 @RestController

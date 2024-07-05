@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +23,7 @@ import org.springframework.cglib.core.Local;
 public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long tarefa_id;
     private String titulo;
     private String descricao;
     private String status;
@@ -34,10 +36,14 @@ public class Tarefa {
     private String local;
     //ver como vamos tratar o anexo de imagem depois
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private TaskUser user; //chave estrangeira
+
     public Tarefa() {} //construtor padrao jpa
 
-    public Tarefa(Long id, String titulo, String descricao, String status, String dataCriacao, String dataFinal, String corFundo, String local){
-        this.id = id;
+    public Tarefa(Long tarefa_id, String titulo, String descricao, String status, String dataCriacao, String dataFinal, String corFundo, String local){
+        this.tarefa_id = tarefa_id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.status = status;
@@ -48,12 +54,12 @@ public class Tarefa {
     }
 
 
-    public Long getId(){
-        return this.id;
+    public Long getTarefaId(){
+        return this.tarefa_id;
     }
 
-    public void setId(Long id){
-        this.id = id;
+    public void setTarefaId(Long tarefa_id){
+        this.tarefa_id = tarefa_id;
     }
     
     public String getTitulo(){
@@ -118,5 +124,13 @@ public class Tarefa {
 
     public void setLocal(String local){
         this.local = local;
+    }
+
+    public TaskUser getUser() {
+        return user;
+    }
+
+    public void setUser(TaskUser user) {
+        this.user = user;
     }
 }

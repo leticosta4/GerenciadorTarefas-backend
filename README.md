@@ -1,5 +1,8 @@
 # Gerenciador de Tarefas - backend
 
+## Alerta
+Sempre que mexer/alterar qualquer coisa relacionado ao banco de dados, checar o arquivo `application.properties` caso precise de mais alguma configuração ou alteração em alguma existente
+
 ## Principais tecnologias
 Spring boot versão 3.3.1
 Java versão 17
