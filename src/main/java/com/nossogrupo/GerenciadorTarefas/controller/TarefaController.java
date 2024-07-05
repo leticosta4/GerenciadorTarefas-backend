@@ -1,16 +1,25 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+// import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
-// import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 
 
 @RestController
 public class TarefaController { 
 
-    //talvez precise rotas duplicadas sem a query tratada
+    @Autowired 
+    private TarefaRepository acaoTarefa; //objeto para excucao dos metodos 
+
+    //USAR POST EM TODAS AS ROTAS QUE PRECISEM DE DADOS SEM SER VIA URL
+
+    @GetMapping("/atividades")
+    public String atividades() {
+        //provavelmente usar o findall do repository da tarefa
+        return "Bem-vindo ao Gerenciador de Tarefas!";
+    }
 
     @GetMapping("/tasks/{titulo}") 
     public String task(@PathVariable String titulo) {
@@ -18,9 +27,13 @@ public class TarefaController {
     }
 
     //rotas-metodos especificas das tasks 
-    @GetMapping("/criar_task/{titulo}") 
-    public String criarTask(@PathVariable String titulo) {
-        return "criando uma task: " + titulo;
+    @GetMapping("/criar_task") 
+    public Tarefa criarTask(@RequestBody Tarefa novaTarefa) {
+        System.out.println("criando uma task");
+
+        //implementar dpeois talvez com funcoes extras
+
+        return acaoTarefa.save(novaTarefa);
     }
 
     @GetMapping("/remover_task/{titulo}") 

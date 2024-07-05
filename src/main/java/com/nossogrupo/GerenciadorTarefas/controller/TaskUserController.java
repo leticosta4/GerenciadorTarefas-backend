@@ -1,24 +1,27 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
 // import com.nossogrupo.GerenciadorTarefas.repository.UserRepository;
+import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
 
 @RestController
 public class TaskUserController {
-    @GetMapping("/cadastro")
-    public String cadastro() {
-        return "oi esse é o signINsignUP";
+
+    @Autowired TaskUserRepository userAcao;
+
+    //USAR POST EM TODAS AS ROTAS QUE PRECISEM DE DADOS SEM SER VIA URL
+
+    @PostMapping("/cadastro")
+    public TaskUser cadastrarNovoUser(@RequestBody TaskUser novoUser) {
+        System.out.println("oi esse é o signINsignUP - usuarios nao logados");
+        return userAcao.save(novoUser);
     }
 
-    @GetMapping("/login")
+    @GetMapping("/login")  //dps mudar p PostMapping
     public String login() {
-        return "oi esse é o signINsignUP";
-    }
-
-    @GetMapping("/atividades")
-    public String atividades() {
-        return "Bem-vindo ao Gerenciador de Tarefas!";
+        return "oi esse é o signINsignUP - usuarios logados";
     }
 
     @GetMapping("/conta_user/{nome}") //talvez completar depois ocm o nome do user em questao se a gente conseguir fazer - tratamento de query

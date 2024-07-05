@@ -11,9 +11,10 @@ Banco de dados MySQL
 - Spring Web
 - Spring data JPA
 - MySQL driver
-- H2 database
 - Validation
 - Spring boot devtools
+- adicionadas posteriormente pelo Maven:
+	- mysql-connector-java
 
 ## Extensoes VS Code
 - Extension Pack for Java
