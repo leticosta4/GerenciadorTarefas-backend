@@ -12,11 +12,7 @@ import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
 import java.util.List;
 
 public interface TarefaRepository extends CrudRepository<Tarefa, Long>{ //chamar o tipo de dado da chave primaria
-    /* util p usar depois:
-    save(): Realiza o cadastro ou alteração de registros;
-    findAll(): Efetua a listagem de todos os dados de uma tabela;
-    deleteById(): Remove uma informação através do identificador.
-*/
+    public static final TaskUserRepository userAcao = null;
 
     ArrayList <TarefaProjection> findAllBy();
 

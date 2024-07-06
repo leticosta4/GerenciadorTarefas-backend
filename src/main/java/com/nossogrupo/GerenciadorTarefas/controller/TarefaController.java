@@ -5,10 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
+
 import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
+
 import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
 
+import com.nossogrupo.GerenciadorTarefas.service.TarefaService;
 
 @RestController
 public class TarefaController { 
@@ -16,16 +19,12 @@ public class TarefaController {
     @Autowired 
     private TarefaRepository acaoTarefa; //objeto para excucao dos metodos 
     @Autowired
-    private TaskUserRepository acaoUser; //teste
+    private TaskUserRepository acaoUser; 
+
+    @Autowired
+    private TarefaService servicoTarefa;
 
     //USAR POST EM TODAS AS ROTAS QUE PRECISEM DE DADOS SEM SER VIA URL
-
-    @GetMapping("/atividades")
-    public ArrayList<TarefaProjection> atividades() {
-        System.out.println("Bem-vindo ao Gerenciador de Tarefas!");
-
-        return acaoTarefa.findAllBy();
-    }
 
     @GetMapping("/tasks/{tarefaId}") 
     public TarefaProjection task(@PathVariable Long tarefaId) {
@@ -45,9 +44,10 @@ public class TarefaController {
             Long userId = user.getUserId();
             if (userId != null) {
                 System.out.println("ID do usuário recebido: " + userId);
-                TaskUser usuarioDaVez = acaoUser.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId));
+                TaskUser usuarioDaVez = acaoUser.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId));
                 novaTarefa.setUser(usuarioDaVez);
+                servicoTarefa.adicionarTaskListaUser(novaTarefa, acaoUser);
+
             } else {
                 throw new RuntimeException("ID do usuário não pode ser nulo.");
             }
@@ -58,14 +58,15 @@ public class TarefaController {
         return acaoTarefa.save(novaTarefa);
     }
 
+    @PutMapping("/editar_task") //acho que tem que passar o id especifico da task talvez
+    public Tarefa editarTask(@RequestBody Tarefa tarefa) {
+        System.out.println("editando uma task:\nID:" + tarefa.getTarefaId() + "\nTITLE: " + tarefa.getTitulo());
+        return acaoTarefa.save(tarefa);
+    }
+
     @GetMapping("/remover_task/{titulo}") 
     public String removerTask(@PathVariable String titulo) {
         return "removendo uma task: " + titulo;
-    }
-
-    @GetMapping("/editar_task/{titulo}") 
-    public String editarTask(@PathVariable String titulo) {
-        return "editando uma task: " + titulo;
     }
 
     @GetMapping("/filtrando_tasks") 

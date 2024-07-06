@@ -14,6 +14,8 @@ import java.time.LocalDate;
 
 import org.springframework.cglib.core.Local;
 
+import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
+
 @Entity
 @Table(name = "tarefa")
 public class Tarefa {

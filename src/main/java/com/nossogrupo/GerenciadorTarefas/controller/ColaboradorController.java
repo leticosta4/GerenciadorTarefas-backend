@@ -22,10 +22,14 @@ public class ColaboradorController {
     @PostMapping("/add_colaborador") 
     public Colaborador criarColaborador(@RequestBody Colaborador novoColaborador) {
         System.out.println("adicionando um colaborador");
-
         //implementar dpeois talvez com funcoes extras
-
         return acaoColaborador.save(novoColaborador);
+    }
+
+    @PutMapping("/editar_colaborador") //talvez tenha que mudar depois p especificar na rota
+    public Colaborador editarColaborador(@RequestBody Colaborador colaborador) {
+        System.out.println("edicao do colaborador. ID: " + colaborador.getColaboradorId() + "- nome: " + colaborador.getNome());
+        return acaoColaborador.save(colaborador);
     }
 
     @GetMapping("/remover_colaborador/{nome}") 
@@ -33,8 +37,5 @@ public class ColaboradorController {
         return "removendo um colaborador: " + nome;
     }
 
-    @GetMapping("/editar_colaborador/{nome}") 
-    public String editarColaborador(@PathVariable String nome) {
-        return "editando um colaborador: " + nome;
-    }
+    
 }

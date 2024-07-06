@@ -6,10 +6,12 @@ import java.time.LocalDate;
 por padrao ele aninha
  */
 public interface TarefaProjection {
+    Long getTarefaId();
     String getTitulo();
     String getDescricao();
     String getStatus();
     LocalDate getDataCriacao();
     LocalDate getDataFinal();
+    String getCorFundo();
     String getLocal();
 }
