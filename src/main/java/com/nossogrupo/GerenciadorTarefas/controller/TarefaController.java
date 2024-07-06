@@ -13,8 +13,6 @@ import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
 import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
 
-import com.nossogrupo.GerenciadorTarefas.service.TarefaService;
-
 @RestController
 public class TarefaController { 
 
@@ -22,9 +20,6 @@ public class TarefaController {
     private TarefaRepository acaoTarefa; //objeto para excucao dos metodos 
     @Autowired
     private TaskUserRepository acaoUser; 
-
-    @Autowired
-    private TarefaService servicoTarefa;
 
     //USAR POST EM TODAS AS ROTAS QUE PRECISEM DE DADOS SEM SER VIA URL
     @GetMapping("/{userId}/atividades")
@@ -54,7 +49,7 @@ public class TarefaController {
                 System.out.println("ID do usuário recebido: " + userId);
                 TaskUser usuarioDaVez = acaoUser.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId));
                 novaTarefa.setUser(usuarioDaVez);
-                servicoTarefa.adicionarTaskListaUser(novaTarefa, acaoUser);
+                //servicoTarefa.adicionarTaskListaUser(novaTarefa, acaoUser);
 
             } else {
                 throw new RuntimeException("ID do usuário não pode ser nulo.");
@@ -62,7 +57,7 @@ public class TarefaController {
         } else {
             throw new RuntimeException("Usuário não pode ser nulo.");
         }
-
+        novaTarefa.setandoValoresPadrao();
         return acaoTarefa.save(novaTarefa);
     }
 

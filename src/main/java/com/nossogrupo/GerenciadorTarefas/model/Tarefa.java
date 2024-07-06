@@ -14,8 +14,6 @@ import java.time.LocalDate;
 
 import org.springframework.cglib.core.Local;
 
-import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
-
 @Entity
 @Table(name = "tarefa")
 public class Tarefa {
@@ -49,7 +47,6 @@ public class Tarefa {
         this.user = user;
     }
 
-
     public Long getTarefaId(){
         return this.tarefaId;
     }
@@ -79,11 +76,7 @@ public class Tarefa {
     }
 
     public void setStatus(String status){
-        if(getStatus() == null){
-            this.status = "A fazer";
-        } else {
-            this.status = status;
-        }
+        this.status = status;
     }
 
     public LocalDate getDataCriacao(){
@@ -91,11 +84,7 @@ public class Tarefa {
     }
 
     public void setDataCriacao(String dataCriacao){
-        if (getDataCriacao() == null){
-            this.dataCriacao = LocalDate.now(); //talvez aqui não sei
-        } else {
-            this.dataCriacao =  LocalDate.parse(dataCriacao);
-        }
+        this.dataCriacao =  LocalDate.parse(dataCriacao);
     }
 
     public LocalDate getDataFinal(){
@@ -110,12 +99,8 @@ public class Tarefa {
         return this.corFundo;
     }
 
-    public void setCorFundo(String corFundo){ //nao sei se deixamos esse tratamento aqui ou nao
-        if(getCorFundo() == null){
-            this.corFundo = "#81ACF0"; //um tom de azul claro
-        } else {
-            this.corFundo = corFundo;
-        }
+    public void setCorFundo(String corFundo){
+        this.corFundo = corFundo;
     }
 
     public String getLocal(){
@@ -132,5 +117,23 @@ public class Tarefa {
 
     public void setUser(TaskUser user) {
         this.user = user;
+    }
+
+    public void setandoValoresPadrao(){
+        if (this.descricao == null){
+            this.descricao = "Descrição para " + this.titulo;
+        }
+        if (this.status == null){
+            this.status = "A fazer";
+        }
+        if (this.dataCriacao == null){
+            this.dataCriacao = LocalDate.now();;
+        }
+        if (this.corFundo == null){
+            this.corFundo = "#81ACF0";
+        }
+        if (this.local == null){
+            this.local = "Nenhum local definido pelo usuário";
+        }
     }
 }
