@@ -1,5 +1,7 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.Colaborador;
@@ -11,9 +13,10 @@ public class ColaboradorController {
     private ColaboradorRepository acaoColaborador;
 
     @GetMapping("/sobre") 
-    public String sobre() {
+    public ArrayList<Colaborador> sobre() {
         //provavelmente vai usar o findall
-        return "sobre os programadores";
+        System.out.println("sobre os programadores");
+        return acaoColaborador.findAll();
     }
 
     @PostMapping("/add_colaborador") 

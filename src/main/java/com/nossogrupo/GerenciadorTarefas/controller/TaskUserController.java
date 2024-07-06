@@ -23,15 +23,17 @@ public class TaskUserController {
         return "oi esse é o signINsignUP - usuarios logados";
     }
 
-    @GetMapping("/conta_user/{nome}") //talvez completar depois ocm o nome do user em questao se a gente conseguir fazer - tratamento de query
-    public String contUser(@PathVariable String nome) {
-        return "Bem-vindo a sua conta" + nome + "!"; 
-    }
+    // @GetMapping("/conta_user/{user_id}") 
+    // public TaskUser contUser(@PathVariable Long user_id, @PathVariable String nome) {
+    //     System.out.println("Bem-vindo a sua conta" + nome + "! ID:" + user_id);
+    //     return userAcao.findByUser_id(user_id); 
+    // }
 
-    @GetMapping("/editar_conta_user/{nome}") 
-    public String editarContaUser(@PathVariable String nome) { //duvida
-        return "o user edita dados da sua conta," + nome;
-    }
+    // @GetMapping("/editar_conta_user/{user_id}") 
+    // public TaskUser editarContaUser(@PathVariable Long user_id, @PathVariable String nome) { //duvida
+    //     System.out.println("o user edita dados da sua conta," + nome + "id: " + user_id);
+    //     return userAcao.findByUser_id(user_id);
+    // }
 
     //alguns testes de rota com atributo especifico da task
     @PostMapping("/task_user")

@@ -77,7 +77,11 @@ public class Tarefa {
     }
 
     public void setStatus(String status){
-        this.status = status;
+        if(getStatus() == null){
+            this.status = "A fazer";
+        } else {
+            this.status = status;
+        }
     }
 
     public LocalDate getDataCriacao(){

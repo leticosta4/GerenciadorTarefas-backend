@@ -27,10 +27,11 @@ public class TarefaController {
         return acaoTarefa.findAllBy();
     }
 
-    @GetMapping("/tasks/{titulo}") 
-    public String task(@PathVariable String titulo) {
-        return "mostrando info da task clicada: " + titulo;
-    }
+    // @GetMapping("/tasks/{tarefaId}") 
+    // public Tarefa task(@PathVariable Long tarefa_id, @PathVariable String titulo) {
+    //     System.out.println("mostrando info da task clicada: " + titulo + "id: " + tarefa_id);
+    //     return acaoTarefa.findBytarefaId(tarefa_id);
+    // }
 
     //rotas-metodos especificas das tasks 
     @PostMapping("/criar_task") 

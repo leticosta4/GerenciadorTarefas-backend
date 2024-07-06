@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
 import com.nossogrupo.GerenciadorTarefas.model.TarefaProjection;
+import java.util.List;
+
 public interface TarefaRepository extends CrudRepository<Tarefa, Long>{ //chamar o tipo de dado da chave primaria
     /* util p usar depois:
     save(): Realiza o cadastro ou alteração de registros;
@@ -16,4 +18,9 @@ public interface TarefaRepository extends CrudRepository<Tarefa, Long>{ //chamar
 */
 
     ArrayList <TarefaProjection> findAllBy();
+
+    // Tarefa findBytarefaId(Long tarefa_id); //tem coisa errada aqui
+    
+    ArrayList <Tarefa> findByStatus(String status); //para quando formos filtrar
+    //provavelmente vai precisar de um p find by user e manipular a FK
 }
