@@ -13,13 +13,13 @@ import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
 import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
 
+import jakarta.transaction.Transactional;
+
 @RestController
 public class TarefaController { 
 
-    @Autowired 
-    private TarefaRepository acaoTarefa; //objeto para excucao dos metodos 
-    @Autowired
-    private TaskUserRepository acaoUser; 
+    @Autowired private TarefaRepository acaoTarefa; 
+    @Autowired private TaskUserRepository acaoUser; 
 
     //USAR POST EM TODAS AS ROTAS QUE PRECISEM DE DADOS SEM SER VIA URL
     @GetMapping("/{userId}/atividades")
@@ -38,6 +38,7 @@ public class TarefaController {
 
     //rotas-metodos especificas das tasks 
     @PostMapping("/criar_task") 
+    @Transactional
     public Tarefa criarTask(@RequestBody Tarefa novaTarefa) {
         System.out.println("criando uma task");
         System.out.println("JSON recebido: " + novaTarefa.toString());
@@ -49,8 +50,6 @@ public class TarefaController {
                 System.out.println("ID do usuário recebido: " + userId);
                 TaskUser usuarioDaVez = acaoUser.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId));
                 novaTarefa.setUser(usuarioDaVez);
-                //servicoTarefa.adicionarTaskListaUser(novaTarefa, acaoUser);
-
             } else {
                 throw new RuntimeException("ID do usuário não pode ser nulo.");
             }
@@ -62,14 +61,17 @@ public class TarefaController {
     }
 
     @PutMapping("/editar_task") //acho que tem que passar o id especifico da task talvez
+    @Transactional
     public Tarefa editarTask(@RequestBody Tarefa tarefa) {
         System.out.println("editando uma task:\nID:" + tarefa.getTarefaId() + "\nTITLE: " + tarefa.getTitulo());
         return acaoTarefa.save(tarefa);
     }
 
-    @GetMapping("/remover_task/{titulo}") 
-    public String removerTask(@PathVariable String titulo) {
-        return "removendo uma task: " + titulo;
+    @DeleteMapping("/remover_task/{tarefaId}") 
+    @Transactional
+    public void removerTask(@PathVariable Long tarefaId) {
+        System.out.println("removendo a task com ID: "+ tarefaId);
+        acaoTarefa.deleteByTarefaId(tarefaId);
     }
 
     @GetMapping("/filtrando_tasks") 

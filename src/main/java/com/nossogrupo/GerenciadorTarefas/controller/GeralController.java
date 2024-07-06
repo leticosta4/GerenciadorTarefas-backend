@@ -12,9 +12,4 @@ public class GeralController {
     public String home() {
         return "oi esse é o landing page, o user n ta logado";
     }
-
-    // @GetMapping("/sobre") 
-    // public String sobre() {
-    //     return "sobre os programadores";
-    // }
 }
