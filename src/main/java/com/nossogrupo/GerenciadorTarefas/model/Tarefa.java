@@ -19,7 +19,7 @@ import org.springframework.cglib.core.Local;
 public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tarefa_id;
+    private Long tarefaId;
     private String titulo;
     private String descricao;
     private String status;
@@ -35,8 +35,8 @@ public class Tarefa {
 
     public Tarefa() {} //construtor padrao jpa
 
-    public Tarefa(Long tarefa_id, String titulo, String descricao, String status, String dataCriacao, String dataFinal, String corFundo, String local, TaskUser user){
-        this.tarefa_id = tarefa_id;
+    public Tarefa(Long tarefaId, String titulo, String descricao, String status, String dataCriacao, String dataFinal, String corFundo, String local, TaskUser user){
+        this.tarefaId = tarefaId;
         this.titulo = titulo;
         this.descricao = descricao;
         this.status = status;
@@ -49,11 +49,11 @@ public class Tarefa {
 
 
     public Long getTarefaId(){
-        return this.tarefa_id;
+        return this.tarefaId;
     }
 
-    public void setTarefaId(Long tarefa_id){
-        this.tarefa_id = tarefa_id;
+    public void setTarefaId(Long tarefaId){
+        this.tarefaId = tarefaId;
     }
     
     public String getTitulo(){

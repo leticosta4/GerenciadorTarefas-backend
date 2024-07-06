@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
+import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
 import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
-import com.nossogrupo.GerenciadorTarefas.model.TarefaProjection;
 
 
 @RestController
@@ -27,11 +27,12 @@ public class TarefaController {
         return acaoTarefa.findAllBy();
     }
 
-    // @GetMapping("/tasks/{tarefaId}") 
-    // public Tarefa task(@PathVariable Long tarefa_id, @PathVariable String titulo) {
-    //     System.out.println("mostrando info da task clicada: " + titulo + "id: " + tarefa_id);
-    //     return acaoTarefa.findBytarefaId(tarefa_id);
-    // }
+    @GetMapping("/tasks/{tarefaId}") 
+    public TarefaProjection task(@PathVariable Long tarefaId) {
+        System.out.println("mostrando info da task clicada com id: " + tarefaId);
+        
+        return acaoTarefa.findByTarefaId(tarefaId);
+    }
 
     //rotas-metodos especificas das tasks 
     @PostMapping("/criar_task") 
@@ -70,11 +71,5 @@ public class TarefaController {
     @GetMapping("/filtrando_tasks") 
     public String filtrarTrasks() {
         return "filtrando as tasks";
-    }
-
-    //alguns testes de rota com atributo especifico da task
-    @PostMapping("/tarefa")
-    public Tarefa task(@RequestBody Tarefa t){
-        return t;
     }
 }

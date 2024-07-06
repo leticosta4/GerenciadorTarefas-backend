@@ -18,7 +18,7 @@ import org.springframework.cglib.core.Local;
 public class TaskUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id; 
+    private Long userId; 
     private String nome;
     private String email;
     private String senha;
@@ -28,8 +28,8 @@ public class TaskUser {
 
     public TaskUser() {} //construtor padrao jpa
 
-    public TaskUser(Long user_id, String nome, String email, String senha){
-        this.user_id = user_id; 
+    public TaskUser(Long userId, String nome, String email, String senha){
+        this.userId = userId; 
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -37,11 +37,11 @@ public class TaskUser {
     }
 
     public Long getUserId(){
-        return this.user_id;
+        return this.userId;
     }
 
-    public void setUserId(Long user_id){
-        this.user_id = user_id;
+    public void setUserId(Long userId){
+        this.userId = userId;
     }
     
     public String getNome(){

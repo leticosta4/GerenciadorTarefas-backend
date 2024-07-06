@@ -3,6 +3,7 @@ package com.nossogrupo.GerenciadorTarefas.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
+import com.nossogrupo.GerenciadorTarefas.model.projection.UserProjection;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
 
 @RestController
@@ -23,16 +24,16 @@ public class TaskUserController {
         return "oi esse é o signINsignUP - usuarios logados";
     }
 
-    // @GetMapping("/conta_user/{user_id}") 
-    // public TaskUser contUser(@PathVariable Long user_id, @PathVariable String nome) {
-    //     System.out.println("Bem-vindo a sua conta" + nome + "! ID:" + user_id);
-    //     return userAcao.findByUser_id(user_id); 
-    // }
+    @GetMapping("/conta_user/{userId}") 
+    public UserProjection contUser(@PathVariable Long userId) {
+        System.out.println("Bem-vindo a sua conta do user com ID:" + userId);
+        return userAcao.findByUserId(userId); 
+    }
 
-    // @GetMapping("/editar_conta_user/{user_id}") 
-    // public TaskUser editarContaUser(@PathVariable Long user_id, @PathVariable String nome) { //duvida
-    //     System.out.println("o user edita dados da sua conta," + nome + "id: " + user_id);
-    //     return userAcao.findByUser_id(user_id);
+    // @GetMapping("/editar_conta_user/{userId}") 
+    // public UserProjection editarContaUser(@PathVariable Long userId) { //duvida
+    //     System.out.println("o user edita dados da sua conta do user com ID: " + userId);
+    //     return userAcao.findByUserId(userId);
     // }
 
     //alguns testes de rota com atributo especifico da task

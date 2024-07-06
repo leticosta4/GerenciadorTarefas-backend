@@ -13,7 +13,7 @@ import org.springframework.cglib.core.Local;
 public class Colaborador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private Long colaboradorId; 
     private String nome;
     private String funcao;
     private String github;
@@ -23,8 +23,8 @@ public class Colaborador {
 
     public Colaborador(){}
 
-    public Colaborador(Long id, String nome, String funcao, String github, String linkedin, String cor_primaria, String cor_secundaria){
-        this.id = id;
+    public Colaborador(Long colaboradorId, String nome, String funcao, String github, String linkedin, String cor_primaria, String cor_secundaria){
+        this.colaboradorId = colaboradorId;
         this.nome = nome;
         this.funcao = funcao;
         this.github = github;
@@ -33,11 +33,11 @@ public class Colaborador {
         this.cor_secundaria = cor_secundaria;
     }
 
-    public Long getId() {
-        return id;
+    public Long getColaboradorId() {
+        return colaboradorId;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setColaboradorId(Long colaboradorId) {
+        this.colaboradorId = colaboradorId;
     }
     public String getNome() {
         return nome;
