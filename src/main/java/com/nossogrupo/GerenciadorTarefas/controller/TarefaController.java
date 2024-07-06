@@ -7,6 +7,7 @@ import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
 import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
+import com.nossogrupo.GerenciadorTarefas.model.TarefaProjection;
 
 
 @RestController
@@ -14,17 +15,16 @@ public class TarefaController {
 
     @Autowired 
     private TarefaRepository acaoTarefa; //objeto para excucao dos metodos 
-
     @Autowired
     private TaskUserRepository acaoUser; //teste
 
     //USAR POST EM TODAS AS ROTAS QUE PRECISEM DE DADOS SEM SER VIA URL
 
     @GetMapping("/atividades")
-    public ArrayList<Tarefa> atividades() {
+    public ArrayList<TarefaProjection> atividades() {
         System.out.println("Bem-vindo ao Gerenciador de Tarefas!");
 
-        return acaoTarefa.findAll();
+        return acaoTarefa.findAllBy();
     }
 
     @GetMapping("/tasks/{titulo}") 

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
-
+import com.nossogrupo.GerenciadorTarefas.model.TarefaProjection;
 public interface TarefaRepository extends CrudRepository<Tarefa, Long>{ //chamar o tipo de dado da chave primaria
     /* util p usar depois:
     save(): Realiza o cadastro ou alteração de registros;
@@ -15,5 +15,5 @@ public interface TarefaRepository extends CrudRepository<Tarefa, Long>{ //chamar
     deleteById(): Remove uma informação através do identificador.
 */
 
-    ArrayList <Tarefa> findAll();
+    ArrayList <TarefaProjection> findAllBy();
 }
