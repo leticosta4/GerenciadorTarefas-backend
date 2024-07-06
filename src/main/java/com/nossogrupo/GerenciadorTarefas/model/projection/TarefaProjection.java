@@ -6,7 +6,7 @@ import java.time.LocalDate;
 por padrao ele aninha
  */
 public interface TarefaProjection {
-    Long getTarefaId();
+    Long getTarefaId(); //rever onde ta usando pq provavelmente vai ter que tirar
     String getTitulo();
     String getDescricao();
     String getStatus();

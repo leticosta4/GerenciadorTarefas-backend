@@ -13,29 +13,32 @@ import jakarta.transaction.Transactional;
 public class ColaboradorController {
     @Autowired private ColaboradorRepository acaoColaborador;
 
-    @GetMapping("/sobre") 
+    //TALVEZ TAMBEM PRECISEM DO ID DO COLABORADOR POR QUESTAO DE SEGURANCA
+
+    @GetMapping("/api/sobre") 
     public ArrayList<Colaborador> sobre() {
-        //provavelmente vai usar o findall
         System.out.println("sobre os programadores");
-        return acaoColaborador.findAll();
+        ArrayList<Colaborador> listaColaboradores = acaoColaborador.findAll();
+        int quantidadeColaboradores = listaColaboradores.size();
+        System.out.println("são " + quantidadeColaboradores + "colaboradores");
+        return  listaColaboradores;
     }
 
-    @PostMapping("/add_colaborador") 
+    @PostMapping("/api/add_colaborador") 
     @Transactional
     public Colaborador criarColaborador(@RequestBody Colaborador novoColaborador) {
         System.out.println("adicionando um colaborador");
-        //implementar dpeois talvez com funcoes extras
         return acaoColaborador.save(novoColaborador);
     }
 
-    @PutMapping("/editar_colaborador") //talvez tenha que mudar depois p especificar na rota
+    @PutMapping("/api/editar_colaborador") //talvez tenha que mudar depois p especificar na rota
     @Transactional
     public Colaborador editarColaborador(@RequestBody Colaborador colaborador) {
         System.out.println("edicao do colaborador. ID: " + colaborador.getColaboradorId() + "- nome: " + colaborador.getNome());
         return acaoColaborador.save(colaborador);
     }
 
-    @DeleteMapping("/remover_colaborador/{colaboradorId}") 
+    @DeleteMapping("/api/remover_colaborador/{colaboradorId}") 
     @Transactional
     public void removerColaborador(@PathVariable Long colaboradorId) {
         System.out.println("removendo o colaborador com ID: "+ colaboradorId);

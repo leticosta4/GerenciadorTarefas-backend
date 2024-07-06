@@ -1,6 +1,5 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,31 +20,64 @@ public class TarefaController {
     @Autowired private TarefaRepository acaoTarefa; 
     @Autowired private TaskUserRepository acaoUser; 
 
-    //USAR POST EM TODAS AS ROTAS QUE PRECISEM DE DADOS SEM SER VIA URL
-    @GetMapping("/{userId}/atividades")
+    ///acho que tem que especificar o user aqui em muitas rotas - questao de padronizacao e seguranca
+
+    @GetMapping("/api/{userId}/atividades")
     public List<TarefaProjection> atividades(@PathVariable Long userId) {
         System.out.println("Bem-vindo ao Gerenciador de Tarefas! user com ID:" + userId);
-        
-        return acaoTarefa.findByUserUserId(userId);
+
+        List<TarefaProjection> listaTarefasUser = acaoTarefa.findByUserUserId(userId);
+        int quantidadeTarefas = listaTarefasUser.size();
+        System.out.println("o user com ID: " + userId + " possui " + quantidadeTarefas + " TAREFAS");
+        return listaTarefasUser;
     }
 
-    @GetMapping("/tasks/{tarefaId}") 
-    public TarefaProjection task(@PathVariable Long tarefaId) {
-        System.out.println("mostrando info da task clicada com id: " + tarefaId);
+
+    @GetMapping("/api/{userId}/atividades/filtro_status_{status}") //ou ?ordem=dataCriacao&direcao=asc
+    public List<TarefaProjection> filtrarTasksStatus(@PathVariable Long userId, @PathVariable String status, @RequestParam(required = false) String ordem, @RequestParam(required = false, defaultValue = "asc") String direcao) {
         
-        return acaoTarefa.findByTarefaId(tarefaId);
+        List<TarefaProjection> listaFiltradaStatus;
+
+        if (ordem != null) {
+            if (ordem.equalsIgnoreCase("dataCriacao")) {
+                if (direcao.equalsIgnoreCase("asc")) {
+                    listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatusOrderByDataCriacao(userId, status);
+                } else {
+                    listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatusOrderByDataCriacaoDesc(userId, status);
+                }
+                System.out.println("filtrando as tasks pelo status e ordenando por data de criacao " + direcao);
+            }
+            
+            else if (ordem.equalsIgnoreCase("dataFinal")) {
+                if (direcao.equalsIgnoreCase("asc")) {
+                    listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatusOrderByDataFinal(userId, status);
+                } else {
+                    listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatusOrderByDataFinalDesc(userId, status);
+                }
+                System.out.println("filtrando as tasks pelo status e ordenando por data data final " + direcao);
+            }
+            
+            else {
+                listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatus(userId, status);
+                System.out.println("filtrando tasks pelo status somente");
+            }
+        } else {
+            listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatus(userId, status);
+            System.out.println("filtrando tasks pelo status somente");
+        }
+
+        return listaFiltradaStatus;
     }
 
-    //rotas-metodos especificas das tasks 
-    @PostMapping("/criar_task") 
+    @PostMapping("/api/{userId}/atividades/criar_task") 
     @Transactional
-    public Tarefa criarTask(@RequestBody Tarefa novaTarefa) {
+    public Tarefa criarTask(@PathVariable Long userId, @RequestBody Tarefa novaTarefa) {
         System.out.println("criando uma task");
         System.out.println("JSON recebido: " + novaTarefa.toString());
         
         TaskUser user = novaTarefa.getUser();
         if (user != null) {
-            Long userId = user.getUserId();
+            //Long userId = user.getUserId(); //antes de passar o userId na URL
             if (userId != null) {
                 System.out.println("ID do usuário recebido: " + userId);
                 TaskUser usuarioDaVez = acaoUser.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId));
@@ -60,22 +92,24 @@ public class TarefaController {
         return acaoTarefa.save(novaTarefa);
     }
 
-    @PutMapping("/editar_task") //acho que tem que passar o id especifico da task talvez
+    @GetMapping("/api/{userId}/atividades/{tarefaId}") //acho que tem que especificar o user antes do id da tarefa
+    public TarefaProjection task(@PathVariable Long userId, @PathVariable Long tarefaId) {
+        System.out.println("mostrando info da task clicada com id: " + tarefaId);
+        
+        return acaoTarefa.findByTarefaId(tarefaId);
+    }
+
+    @PutMapping("/api/{userId}/atividades/{tarefaId}/editar_task") //acho que tem que passar o id especifico da task talvez
     @Transactional
-    public Tarefa editarTask(@RequestBody Tarefa tarefa) {
+    public Tarefa editarTask(@PathVariable Long userId, @PathVariable Long tarefaId, @RequestBody Tarefa tarefa) {
         System.out.println("editando uma task:\nID:" + tarefa.getTarefaId() + "\nTITLE: " + tarefa.getTitulo());
         return acaoTarefa.save(tarefa);
     }
 
-    @DeleteMapping("/remover_task/{tarefaId}") 
+    @DeleteMapping("/api/{userId}/atividades/{tarefaId}/remover_task") 
     @Transactional
-    public void removerTask(@PathVariable Long tarefaId) {
+    public void removerTask(@PathVariable Long userId, @PathVariable Long tarefaId) {
         System.out.println("removendo a task com ID: "+ tarefaId);
         acaoTarefa.deleteByTarefaId(tarefaId);
-    }
-
-    @GetMapping("/filtrando_tasks") 
-    public String filtrarTrasks() {
-        return "filtrando as tasks";
     }
 }

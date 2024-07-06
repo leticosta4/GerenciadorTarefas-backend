@@ -15,10 +15,16 @@ import java.util.List;
 public interface TarefaRepository extends JpaRepository<Tarefa, Long>{ //chamar o tipo de dado da chave primaria
     public static final TaskUserRepository userAcao = null;
 
-    ArrayList <TarefaProjection> findAllBy();
+    ArrayList <TarefaProjection> findAllBy(); //revisar uso depois
     TarefaProjection findByTarefaId(Long tarefaId); 
     List<TarefaProjection> findByUserUserId(Long userId);
     void deleteByTarefaId(Long tarefaId);
-    ArrayList <Tarefa> findByStatus(String status); //para quando formos filtrar 
-    //provavelmente vai precisar de um p find by user e manipular a FK
+
+    //talvez precisem de mais com filtros
+    
+    List<TarefaProjection> findByUserUserIdAndStatus(Long userId, String status);
+    List<TarefaProjection> findByUserUserIdAndStatusOrderByDataCriacao(Long userId, String status); 
+    List<TarefaProjection> findByUserUserIdAndStatusOrderByDataCriacaoDesc(Long userId, String status); 
+    List<TarefaProjection> findByUserUserIdAndStatusOrderByDataFinal(Long userId, String status);
+    List<TarefaProjection> findByUserUserIdAndStatusOrderByDataFinalDesc(Long userId, String status);
 }
