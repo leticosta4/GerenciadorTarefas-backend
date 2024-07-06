@@ -17,7 +17,7 @@ public interface TarefaRepository extends CrudRepository<Tarefa, Long>{ //chamar
     ArrayList <TarefaProjection> findAllBy();
 
     TarefaProjection findByTarefaId(Long tarefaId); 
-
+    List<TarefaProjection> findByUserUserId(Long userId);
     ArrayList <Tarefa> findByStatus(String status); //para quando formos filtrar 
     //provavelmente vai precisar de um p find by user e manipular a FK
 }

@@ -1,6 +1,8 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
@@ -25,6 +27,12 @@ public class TarefaController {
     private TarefaService servicoTarefa;
 
     //USAR POST EM TODAS AS ROTAS QUE PRECISEM DE DADOS SEM SER VIA URL
+    @GetMapping("/{userId}/atividades")
+    public List<TarefaProjection> atividades(@PathVariable Long userId) {
+        System.out.println("Bem-vindo ao Gerenciador de Tarefas! user com ID:" + userId);
+        
+        return acaoTarefa.findByUserUserId(userId);
+    }
 
     @GetMapping("/tasks/{tarefaId}") 
     public TarefaProjection task(@PathVariable Long tarefaId) {

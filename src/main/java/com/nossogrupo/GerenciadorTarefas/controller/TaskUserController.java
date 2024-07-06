@@ -15,13 +15,6 @@ public class TaskUserController {
     @Autowired TaskUserRepository userAcao;
     //USAR POST EM TODAS AS ROTAS QUE PRECISEM DE DADOS SEM SER VIA URL
 
-    @GetMapping("/{userId}/atividades")
-    // public ArrayList<TarefaProjection> atividades(@PathVariable Long userId) {
-    //     System.out.println("Bem-vindo ao Gerenciador de Tarefas! user com ID:" + userId);
-    //     userAcao.findByUserId(userId);
-    //     return userAcao.findAllBy();
-    // }
-
     @PostMapping("/cadastro")
     public TaskUser cadastrarNovoUser(@RequestBody TaskUser novoUser) {
         System.out.println("oi esse é o signINsignUP - usuarios nao logados");
@@ -42,8 +35,6 @@ public class TaskUserController {
     @PutMapping("/editar_conta_user") //acho que tem que passar o id especifico do user talvez
     public TaskUser editarContaUser(@RequestBody TaskUser user) { 
         System.out.println("o user edita dados da sua conta. ID: " + user.getUserId() + " - nome: " + user.getNome());
-        // String msg = userServico.editarUser(user, userAcao);
-        // return msg;
         return userAcao.save(user);
     }
 
