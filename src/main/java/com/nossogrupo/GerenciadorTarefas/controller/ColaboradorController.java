@@ -15,8 +15,17 @@ public class ColaboradorController {
 
     //TALVEZ TAMBEM PRECISEM DO ID DO COLABORADOR POR QUESTAO DE SEGURANCA
 
-    @GetMapping("/api/sobre")  //colocar condicao para o user logado
-    public ArrayList<Colaborador> sobre() {
+    @GetMapping({"/api/sobre", "/api/{userId}/sobre"})  
+    public ArrayList<Colaborador> sobre(@PathVariable(required = false) String userId) {
+        if (userId != null) {
+            try {
+                Long userIdLong = Long.parseLong(userId);
+                System.out.println("USER COM ID: " + userIdLong + " LOGADO");
+            } catch (NumberFormatException e) {
+                System.out.println("VALOR INVALIDO para userId: " + userId);
+            }
+        } else {  System.out.println("NINGUEM LOGADO"); }
+
         System.out.println("sobre os programadores");
         ArrayList<Colaborador> listaColaboradores = acaoColaborador.findAll();
         int quantidadeColaboradores = listaColaboradores.size();
@@ -31,14 +40,14 @@ public class ColaboradorController {
     //     return acaoColaborador.save(novoColaborador);
     // }
 
-    // @PutMapping("/api/editar_colaborador") //faltou especificar o id do colaborador
+    // @PutMapping("/api/{colaboradorId}/editar_colaborador") //faltou especificar o id do colaborador
     // @Transactional
-    // public Colaborador editarColaborador(@RequestBody Colaborador colaborador) {
-    //     System.out.println("edicao do colaborador. ID: " + colaborador.getColaboradorId() + "- nome: " + colaborador.getNome());
+    // public Colaborador editarColaborador(@PathVariable Long colaboradorId, @RequestBody Colaborador colaborador) {
+    //     System.out.println("edicao do colaborador. ID: " + colaboradorId + "- nome: " + colaborador.getNome());
     //     return acaoColaborador.save(colaborador);
     // }
 
-    // @DeleteMapping("/api/remover_colaborador/{colaboradorId}") 
+    // @DeleteMapping("/api/{colaboradorId}/remover_colaborador") 
     // @Transactional
     // public void removerColaborador(@PathVariable Long colaboradorId) {
     //     System.out.println("removendo o colaborador com ID: "+ colaboradorId);

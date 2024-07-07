@@ -31,7 +31,9 @@ public class TarefaController {
     }
 
 
-    @GetMapping("/api/{userId}/atividades/filtro_status_{status}") //ou ?ordem=dataCriacao&direcao=asc
+    @GetMapping({"/api/{userId}/atividades/filtro_status_{status}",
+                "/api/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=asc",
+                "/api/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=desc",}) //ou ?ordem=dataCriacao&direcao=asc
     public List<TarefaProjection> filtrarTasksStatus(@PathVariable Long userId, @PathVariable String status, @RequestParam(required = false) String ordem, @RequestParam(required = false, defaultValue = "asc") String direcao) {
         
         List<TarefaProjection> listaFiltradaStatus;
