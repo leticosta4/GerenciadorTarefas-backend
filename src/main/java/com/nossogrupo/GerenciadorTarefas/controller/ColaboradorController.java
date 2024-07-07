@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.Colaborador;
 import com.nossogrupo.GerenciadorTarefas.repository.ColaboradorRepository;
 
-import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 
 @RestController
 public class ColaboradorController {

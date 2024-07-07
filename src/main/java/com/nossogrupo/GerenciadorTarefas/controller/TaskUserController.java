@@ -27,7 +27,7 @@ public class TaskUserController {
         return "oi esse é o signINsignUP - usuarios logados";
     }
 
-    @GetMapping("/api/{userId}") 
+    @GetMapping("/api/{userId}/conta") 
     public UserProjection contaUser(@PathVariable Long userId) {
         System.out.println("Bem-vindo a sua conta do user com ID:" + userId + "mostrando a info do user clicado");
         return userAcao.findByUserId(userId); 

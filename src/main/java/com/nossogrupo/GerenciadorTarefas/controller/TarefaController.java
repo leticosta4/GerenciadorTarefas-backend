@@ -3,7 +3,11 @@ package com.nossogrupo.GerenciadorTarefas.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.nossogrupo.GerenciadorTarefas.model.Mensagem;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
 
@@ -11,6 +15,7 @@ import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
 
 import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
+import com.nossogrupo.GerenciadorTarefas.service.TarefaService;
 
 import jakarta.transaction.Transactional;
 
@@ -19,15 +24,26 @@ public class TarefaController {
 
     @Autowired private TarefaRepository acaoTarefa; 
     @Autowired private TaskUserRepository acaoUser; 
+    @Autowired private TarefaService tarefaService;
+    
+    @Autowired private Mensagem mensagem;
 
     @GetMapping("/api/{userId}/atividades")
-    public List<TarefaProjection> atividades(@PathVariable Long userId) {
-        System.out.println("Bem-vindo ao Gerenciador de Tarefas! user com ID:" + userId);
+     public ResponseEntity<?> atividades(@PathVariable String userId) {
+        Long userIdLong = tarefaService.validarStringUserId(userId);
+        if(userIdLong != null){
+            ResponseEntity<?> response = tarefaService.validarFindUserId(userIdLong);
+            if (response.getStatusCode() != HttpStatus.OK) {
+                return response;
+            }
+        }
+        
+        else {
+            mensagem.setMensagem("valor inválido para userId");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        }
 
-        List<TarefaProjection> listaTarefasUser = acaoTarefa.findByUserUserId(userId);
-        int quantidadeTarefas = listaTarefasUser.size();
-        System.out.println("o user com ID: " + userId + " possui " + quantidadeTarefas + " TAREFAS");
-        return listaTarefasUser;
+        return new ResponseEntity<>(acaoTarefa.findByUserUserId(userIdLong), HttpStatus.OK);
     }
 
 
