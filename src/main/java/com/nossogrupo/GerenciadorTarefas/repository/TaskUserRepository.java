@@ -1,8 +1,6 @@
 package com.nossogrupo.GerenciadorTarefas.repository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.springframework.data.jpa.repository.JpaRepository; 
 // import org.springframework.stereotype.Repository;
 

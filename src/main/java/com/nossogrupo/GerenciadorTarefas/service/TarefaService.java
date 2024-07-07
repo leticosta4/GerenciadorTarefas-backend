@@ -151,4 +151,57 @@ public class TarefaService {
         mensagem.setMensagem("A tarefa não foi encontrada na lista de tasks do user");
         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
     }
+
+    public ResponseEntity<?> editarTask(String stringUserId, String stringTarefaId, Tarefa tarefa){
+        Long userId, tarefaId;
+        try {
+            userId =  Long.parseLong(stringUserId);
+            tarefaId = Long.parseLong(stringTarefaId);
+        }
+        catch (NumberFormatException e) {
+            mensagem.setMensagem("valor inválido para userId ou para tarefaId");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        }
+
+        if(acaoUser.findByUserId(userId) == null){
+            mensagem.setMensagem("Usuário não encontrado com o ID fornecido");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+        }
+        
+        List<TarefaProjection> listaTarefasUser = acaoTarefa.findByUserUserId(userId);
+        for(TarefaProjection tarefaUser : listaTarefasUser){
+            if(tarefaUser.getTarefaId() == tarefaId){
+                return new ResponseEntity<>(acaoTarefa.save(tarefa), HttpStatus.OK);
+            }
+        }
+        mensagem.setMensagem("A tarefa não foi encontrada na lista de tasks do user");
+        return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<?> removerTask(String stringUserId, String stringTarefaId){
+        Long userId, tarefaId;
+        try {
+            userId =  Long.parseLong(stringUserId);
+            tarefaId = Long.parseLong(stringTarefaId);
+        }
+        catch (NumberFormatException e) {
+            mensagem.setMensagem("valor inválido para userId ou para tarefaId");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        }
+
+        if(acaoUser.findByUserId(userId) == null){
+            mensagem.setMensagem("Usuário não encontrado com o ID fornecido");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+        }
+        
+        List<TarefaProjection> listaTarefasUser = acaoTarefa.findByUserUserId(userId);
+        for(TarefaProjection tarefaUser : listaTarefasUser){
+            if(tarefaUser.getTarefaId() == tarefaId){
+                acaoTarefa.deleteByTarefaId(tarefaId);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+        mensagem.setMensagem("A tarefa não foi encontrada na lista de tasks do user");
+        return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+    }
 }
