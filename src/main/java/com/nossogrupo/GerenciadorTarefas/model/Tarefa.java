@@ -127,6 +127,9 @@ public class Tarefa {
         if (this.dataCriacao == null){
             this.dataCriacao = LocalDate.now();;
         }
+        if(LocalDate.now().isAfter(this.getDataFinal())){
+            this.setStatus("Em atraso");
+        }
         if (this.corFundo == null){
             this.corFundo = "#81ACF0";
         }

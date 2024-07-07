@@ -19,10 +19,17 @@ public class UserService {
     @Autowired private TaskUserRepository acaoUser; 
     @Autowired private Mensagem mensagem;
 
-    public ResponseEntity<?> login(TaskUser usuario){
+    //eu achava melhor aqui aumentar a validaçao dos dados - PARA CADASTRO TB
+
+    //MUDAR O RETORNO
+    //pegar o user e concatenar em uma lista ou usar o construtor e mandar
+    public ResponseEntity<?> login(TaskUser usuario){ 
         ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
         for(TaskUser user : listaUsers){
-            if(user.getEmail().equals(usuario.getEmail())){
+            if(user.getEmail().equals(usuario.getEmail()) && user.getSenha().equals(usuario.getSenha())){ //incrementar com algumas msgs
+                user.checaPrazoTarefas(); //vendo se tem tarefas atrasadas
+                acaoUser.save(user); //salvado no banco
+                mensagem.setMensagem("user encontrado");
                 return new ResponseEntity<>(user, HttpStatus.OK);
             }
         }

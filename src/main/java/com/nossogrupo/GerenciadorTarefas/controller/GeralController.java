@@ -1,13 +1,12 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
-// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class GeralController {
 
-    //ver como criar com o autowired p instancia de objetos aqui
+    //ver como fazer a instancia de objetos padrao p o banco
 
     @GetMapping("/")
     public String home() {

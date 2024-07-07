@@ -13,7 +13,6 @@ import java.util.List;
 @Repository
 public interface TarefaRepository extends JpaRepository<Tarefa, Long>{ //chamar o tipo de dado da chave primaria
     public static final TaskUserRepository userAcao = null;
-
     ArrayList <TarefaProjection> findAllBy(); //revisar uso depois
     TarefaProjection findByTarefaId(Long tarefaId); 
     List<TarefaProjection> findByUserUserId(Long userId);

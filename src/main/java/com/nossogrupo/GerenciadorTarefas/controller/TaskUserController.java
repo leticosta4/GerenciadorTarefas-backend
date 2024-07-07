@@ -15,40 +15,40 @@ import jakarta.transaction.Transactional;
 @CrossOrigin(origins = "*")
 public class TaskUserController {
 
-    @Autowired TaskUserRepository userAcao;
+    @Autowired TaskUserRepository acaoUser;
 
-    @Autowired UserService userService;
+    @Autowired UserService servicoUser;
 
     @PostMapping("/api/cadastro")
     @Transactional
     public TaskUser cadastrarNovoUser(@RequestBody TaskUser novoUser) {
         System.out.println("oi esse é o signINsignUP - usuarios nao logados");
         //mandar o json do user logado p o front
-        return userAcao.save(novoUser);
+        return acaoUser.save(novoUser);
     }
 
-    @GetMapping("/api/login")  //dps mudar p PostMapping, acho q n, conferir depois
+    @PostMapping("/api/login")  //dps mudar p PostMapping, acho q n, conferir depois
     public ResponseEntity<?> login(@RequestBody TaskUser usuario) {
-        return userService.login(usuario);
+        return servicoUser.login(usuario); //MUDAR DEPOIS PARA O USER PROJECTION =====> id e nome
     }
 
     @GetMapping("/api/{userId}/conta") 
     public UserProjection contaUser(@PathVariable Long userId) {
         System.out.println("Bem-vindo a sua conta do user com ID:" + userId + "mostrando a info do user clicado");
-        return userAcao.findByUserId(userId); 
+        return acaoUser.findByUserId(userId); 
     }
 
     @PutMapping("/api/{userId}/editar_conta") 
     @Transactional
     public TaskUser editarContaUser(@RequestBody TaskUser user) { 
         System.out.println("o user edita dados da sua conta. ID: " + user.getUserId() + " - nome: " + user.getNome());
-        return userAcao.save(user);
+        return acaoUser.save(user);
     }
 
     @DeleteMapping("/api/{userId}/apagar_conta") 
     @Transactional
     public void removerContaUser(@PathVariable Long userId) {
         System.out.println("removendo o user com ID: "+ userId);
-        userAcao.removeByUserId(userId);
+        acaoUser.removeByUserId(userId);
     }
 }

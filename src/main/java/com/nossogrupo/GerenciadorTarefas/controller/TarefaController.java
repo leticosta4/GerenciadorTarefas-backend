@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 // import com.nossogrupo.GerenciadorTarefas.model.Mensagem;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
@@ -25,50 +24,32 @@ public class TarefaController {
 
     @Autowired private TarefaRepository acaoTarefa; 
     @Autowired private TaskUserRepository acaoUser; 
-    @Autowired private TarefaService tarefaService;
+    @Autowired private TarefaService servicoTarefa;
     
     // @Autowired private Mensagem mensagem;
 
     @GetMapping("/api/{userId}/atividades")
      public ResponseEntity<?> atividades(@PathVariable String userId) {
-        return tarefaService.atividades(userId);
+        return servicoTarefa.atividades(userId);
     }   
-
 
     @GetMapping({"/api/{userId}/atividades/filtro_status_{status}",
                 "/api/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=asc",
-                "/api/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=desc",}) //ou ?ordem=dataCriacao&direcao=asc
+                "/api/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=desc",}) 
     public ResponseEntity<?> filtrarTasksStatus(@PathVariable String userId, @PathVariable String status, @RequestParam(required = false) String ordem, @RequestParam(required = false, defaultValue = "asc") String direcao) {
-        return tarefaService.filtrarTaskStatus(userId, status, ordem, direcao);
+        return servicoTarefa.filtrarTaskStatus(userId, status, ordem, direcao);
     }    
 
     @PostMapping("/api/{userId}/atividades/criar_task") 
     @Transactional
-    public Tarefa criarTask(@PathVariable Long userId, @RequestBody Tarefa novaTarefa) {
-        System.out.println("criando uma task");
-        System.out.println("JSON recebido: " + novaTarefa.toString());
-        
-        TaskUser user = novaTarefa.getUser();
-        if (user != null) {
-            //Long userId = user.getUserId(); //antes de passar o userId na URL
-            if (userId != null) {
-                System.out.println("ID do usuário recebido: " + userId);
-                TaskUser usuarioDaVez = acaoUser.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId));
-                novaTarefa.setUser(usuarioDaVez);
-            } else {
-                throw new RuntimeException("ID do usuário não pode ser nulo.");
-            }
-        } else {
-            throw new RuntimeException("Usuário não pode ser nulo.");
-        }
-        novaTarefa.setandoValoresPadrao();
-        return acaoTarefa.save(novaTarefa);
+    public ResponseEntity<?> criarTask(@PathVariable String userId, @RequestBody Tarefa novaTarefa){
+        return servicoTarefa.criarTask(userId, novaTarefa);
     }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/api/{userId}/atividades/{tarefaId}") 
     public TarefaProjection task(@PathVariable Long userId, @PathVariable Long tarefaId) {
         System.out.println("mostrando info da task clicada com id: " + tarefaId);
-        
         return acaoTarefa.findByTarefaId(tarefaId);
     }
 
@@ -76,6 +57,7 @@ public class TarefaController {
     @Transactional
     public Tarefa editarTask(@PathVariable Long userId, @PathVariable Long tarefaId, @RequestBody Tarefa tarefa) {
         System.out.println("editando uma task:\nID:" + tarefa.getTarefaId() + "\nTITLE: " + tarefa.getTitulo());
+        tarefa.setandoValoresPadrao();
         return acaoTarefa.save(tarefa);
     }
 

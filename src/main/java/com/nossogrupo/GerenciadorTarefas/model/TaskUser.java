@@ -8,9 +8,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.CascadeType;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @Table(name = "task_user")
@@ -73,5 +73,15 @@ public class TaskUser {
 
     public void setListaTarefasUser(List<Tarefa> listaTarefasUser) {
         this.listaTarefasUser = listaTarefasUser;
+    }
+
+    public void checaPrazoTarefas(){
+        List<Tarefa> listaTarefasUser = this.getListaTarefasUser();
+        for(Tarefa tarefaUser : listaTarefasUser){
+            if(LocalDate.now().isAfter(tarefaUser.getDataFinal())){
+                tarefaUser.setStatus("Em atraso");
+                break;
+            }
+        }
     }
 }
