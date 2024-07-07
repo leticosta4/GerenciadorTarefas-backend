@@ -46,16 +46,14 @@ public class TarefaController {
         return servicoTarefa.criarTask(userId, novaTarefa);
     }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
     @GetMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}") 
-    public TarefaProjection task(@PathVariable Long userId, @PathVariable Long tarefaId) {
+    public ResponseEntity<?> task(@PathVariable String userId, @PathVariable String tarefaId) {
         System.out.println("mostrando info da task clicada com id: " + tarefaId);
-        return acaoTarefa.findByTarefaId(tarefaId);
+        return servicoTarefa.task(userId, tarefaId);
     }
-    // public ResponseEntity<?> task(@PathVariable String userId, @PathVariable String tarefaId) {
-    //     return servicoTarefa.task(userId, tarefaId);
-    // }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
     @PutMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}/editar_task") 
     @Transactional
     public Tarefa editarTask(@PathVariable Long userId, @PathVariable Long tarefaId, @RequestBody Tarefa tarefa) {

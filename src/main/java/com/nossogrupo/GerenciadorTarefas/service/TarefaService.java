@@ -1,6 +1,7 @@
 package com.nossogrupo.GerenciadorTarefas.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -124,32 +125,30 @@ public class TarefaService {
         }
     }
 
-    // public ResponseEntity<?> task(String stringUserId, String stringTarefaId){
-    //     Boolean naoEncontrouUserLista = false;
-    //     Long userId, tarefaId;
-    //     try {
-    //         userId =  Long.parseLong(stringUserId);
-    //         tarefaId = Long.parseLong(stringTarefaId);
-    //     }
-    //     catch (NumberFormatException e) {
-    //         mensagem.setMensagem("valor inválido para userId ou para tarefaId");
-    //         return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
-    //     }
+    public ResponseEntity<?> task(String stringUserId, String stringTarefaId){
+        Long userId, tarefaId;
+        try {
+            userId =  Long.parseLong(stringUserId);
+            tarefaId = Long.parseLong(stringTarefaId);
+        }
+        catch (NumberFormatException e) {
+            mensagem.setMensagem("valor inválido para userId ou para tarefaId");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        }
 
-    //     if(acaoUser.findByUserId(userId) == null){
-    //         mensagem.setMensagem("Usuário não encontrado com o ID fornecido");
-    //         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
-    //     }
+        if(acaoUser.findByUserId(userId) == null){
+            mensagem.setMensagem("Usuário não encontrado com o ID fornecido");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+        }
         
-    //     TarefaProjection tarefaClicada = acaoTarefa.findByTarefaId(tarefaId);
-    //     System.out.println("id tarefa clicada: " + tarefaClicada.getTarefaId());
-    //     System.out.println("titulo tarefa clicada: " + tarefaClicada.getTitulo());
+        List<TarefaProjection> listaTarefasUser = acaoTarefa.findByUserUserId(userId);
+        for(TarefaProjection tarefaUser : listaTarefasUser){
+            if(tarefaUser.getTarefaId() == tarefaId){
+                return new ResponseEntity<>(tarefaUser, HttpStatus.OK);
+            }
+        }
 
-    //     if(tarefaClicada == null){
-    //         mensagem.setMensagem("A tarefa não foi encontrada na lista de tasks do user");
-    //         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
-    //     } else {
-    //         return new ResponseEntity<>(tarefaClicada, HttpStatus.OK);
-    //     }
-    // }
+        mensagem.setMensagem("A tarefa não foi encontrada na lista de tasks do user");
+        return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+    }
 }
