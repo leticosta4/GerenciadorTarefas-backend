@@ -21,8 +21,6 @@ public class UserService {
 
     //eu achava melhor aqui aumentar a validaçao dos dados - PARA CADASTRO TB
 
-    //MUDAR O RETORNO
-    //pegar o user e concatenar em uma lista ou usar o construtor e mandar
     public ResponseEntity<?> login(TaskUser usuario){ 
         ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
         for(TaskUser user : listaUsers){
@@ -30,7 +28,10 @@ public class UserService {
                 user.checaPrazoTarefas(); //vendo se tem tarefas atrasadas
                 acaoUser.save(user); //salvado no banco
                 mensagem.setMensagem("user encontrado");
-                return new ResponseEntity<>(user, HttpStatus.OK);
+
+                TaskUser userJsonSimples = new TaskUser(user.getUserId(), user.getNome());
+
+                return new ResponseEntity<>(userJsonSimples, HttpStatus.OK);
             }
         }
         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);

@@ -1,6 +1,7 @@
 package com.nossogrupo.GerenciadorTarefas.repository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.springframework.data.jpa.repository.JpaRepository; 
 // import org.springframework.stereotype.Repository;
@@ -12,4 +13,5 @@ public interface TaskUserRepository extends JpaRepository<TaskUser, Long>{
     ArrayList <TaskUser> findAllBy();
     UserProjection findByUserId(Long userId);
     void removeByUserId(Long userId);
+    //void saveAll(Arrays listaUsers);
 }

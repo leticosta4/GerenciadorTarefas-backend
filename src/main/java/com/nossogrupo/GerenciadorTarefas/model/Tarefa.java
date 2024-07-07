@@ -36,12 +36,12 @@ public class Tarefa {
     public Tarefa(Long tarefaId, String titulo, String descricao, String status, String dataCriacao, String dataFinal, String corFundo, String local, TaskUser user){
         this.tarefaId = tarefaId;
         this.titulo = titulo;
-        this.descricao = descricao;
+        if (this.descricao == null){ this.descricao = "Descrição para " + this.titulo; } else { this.descricao = descricao; }
         this.status = status;
-        this.dataCriacao = LocalDate.parse(dataCriacao);
+        if (this.dataCriacao == null){ this.dataCriacao = LocalDate.now();} else { this.dataCriacao = LocalDate.parse(dataCriacao);;}
         this.dataFinal = LocalDate.parse(dataFinal);
-        this.corFundo = corFundo;
-        this.local = local;
+        if (this.corFundo == null){ this.corFundo = "#81ACF0"; } else {  this.corFundo = corFundo; }
+        if (this.local == null){ this.local = "Nenhum local definido pelo usuário"; } else { this.local = local; }
         this.user = user;
     }
 

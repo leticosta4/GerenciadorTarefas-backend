@@ -26,7 +26,7 @@ public class TaskUser {
     private List<Tarefa> listaTarefasUser = new ArrayList<>();
 
     public TaskUser() {} //construtor padrao jpa
-
+    public TaskUser(Long userId, String nome) {}; //para facilitar o envio no front - rastreamento pleo id
     public TaskUser(Long userId, String nome, String email, String senha){
         this.userId = userId; 
         this.nome = nome;
