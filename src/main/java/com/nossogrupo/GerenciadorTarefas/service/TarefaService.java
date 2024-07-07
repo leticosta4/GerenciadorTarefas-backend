@@ -88,7 +88,7 @@ public class TarefaService {
     }
 
     public ResponseEntity<?> criarTask(String stringUserId, Tarefa novaTarefa){
-        Boolean naoEncontrouUserLista = false;
+        Boolean encontrouUserLista = false;
         Long userId;
         try {
             userId =  Long.parseLong(stringUserId);
@@ -101,11 +101,12 @@ public class TarefaService {
         ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
         for(TaskUser user : listaUsers){
             if(user.getUserId() == userId){
-                return new ResponseEntity<>(acaoTarefa.findByUserUserId(userId), HttpStatus.OK);
-            } else { naoEncontrouUserLista = true; }
+                encontrouUserLista = true;
+                break;
+            } 
         }
 
-        if(naoEncontrouUserLista){
+        if(!encontrouUserLista){
             mensagem.setMensagem("Usuário não encontrado com o ID fornecido");
             return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
         }

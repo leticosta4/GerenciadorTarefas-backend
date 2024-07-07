@@ -1,6 +1,8 @@
 package com.nossogrupo.GerenciadorTarefas;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,6 +19,9 @@ public class GerenciadorTarefasApplication implements CommandLineRunner{
 	@Autowired TaskUserRepository acaoUser;
 	@Autowired TarefaRepository acaoTarefa;
 	@Autowired ColaboradorRepository acaoColaborador;
+	List<Colaborador> listaColaboradores = new ArrayList<>();
+	List<TaskUser> listaUsers = new ArrayList<>(); 
+	List<Tarefa> listaTarefas = new ArrayList<>();
 
 	public static void main(String[] args) {
 		SpringApplication.run(GerenciadorTarefasApplication.class, args);
@@ -24,18 +29,27 @@ public class GerenciadorTarefasApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-
 		Colaborador c1 = new Colaborador((long) 1, "Letícia", "Backend", "https://github.com/leticosta4", "www.linkedin.com/in/letícia-almeida-9704162a0/", "#800080", "#f109af");
 		Colaborador c2 = new Colaborador((long) 2, "Alysson", "Frontend", "https://github.com/VerttB", "https://www.linkedin.com/in/alysson-dos-anjos-00b431305/", "#ff00aa", "#ff5bc8");
 		Colaborador c3 = new Colaborador((long) 3, "Kaik", "Frontend", "https://github.com/Syrex72", "https://www.linkedin.com/in/kaik-costa-pereira-655544273/",  "#FF0000", "#ffc177");
 		Colaborador c4 = new Colaborador((long) 4, "Cainan", "Backend", "https://github.com/Cainan-bas", null, "#0000FF",  "#0070ff");
-		acaoColaborador.saveAll(Arrays.asList(c1, c2, c3, c4));
+		listaColaboradores.addAll(Arrays.asList(c1, c2, c3, c4));
+
+		for(Colaborador c : listaColaboradores){
+			if(!acaoColaborador.existsByColaboradorId(c.getColaboradorId())){ acaoColaborador.save(c); }
+		}
+		listaColaboradores.clear();
 
 		TaskUser u1 = new TaskUser((long) 1, "Let", "leticiacostaoa@gmail.com", "123456");
         TaskUser u2 = new TaskUser((long) 2, "Alysson", "alyssonoliveira456@gmail.com", "654321");
         TaskUser u3 = new TaskUser((long) 3, "Kaik", "kaikcpereira@gmail.com", "1142878");
         TaskUser u4 = new TaskUser((long) 4, "Cainan", "cainan.bas@gmail.com", "1109876");
-		acaoUser.saveAll(Arrays.asList(u1, u2, u3, u4));
+		listaUsers.addAll(Arrays.asList(u1, u2, u3, u4));
+
+		for(TaskUser u : listaUsers){
+			if(!acaoUser.existsByUserId(u.getUserId())){ acaoUser.save(u); }
+		}
+		listaUsers.clear();
 
 		Tarefa t1 = new Tarefa((long) 1, "estudar nodejs", "fazer mini projeto tbm", "Pendente", null, "2024-12-31", null, null, u1);
         Tarefa t2 = new Tarefa((long) 2, "ir à praia", null, "Atrasada", null, "2024-07-31", null, "Guarajuba", u1);
@@ -60,8 +74,11 @@ public class GerenciadorTarefasApplication implements CommandLineRunner{
         Tarefa t19 = new Tarefa((long) 19, "dormir", "necessário demais", "Em andamento", null, "2024-07-09", null, null, u3);
         Tarefa t20 = new Tarefa((long) 20, "dormir", "necessário demais", "Pendente", null, "2024-07-09", null, null, u4);
 		
-		acaoTarefa.saveAll(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
-		
+		listaTarefas.addAll(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+		for(Tarefa t : listaTarefas){
+			if(!acaoTarefa.existsByTarefaId(t.getTarefaId())){ acaoTarefa.save(t); }
+		}
+		listaTarefas.clear();
 	}
 
 }

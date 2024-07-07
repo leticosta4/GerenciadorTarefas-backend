@@ -21,34 +21,29 @@ public class TaskUserController {
 
     @PostMapping("/GerenciadorTarefas/cadastro")
     @Transactional
-    public TaskUser cadastrarNovoUser(@RequestBody TaskUser novoUser) {
-        System.out.println("oi esse é o signINsignUP - usuarios nao logados");
-        //mandar o json do user logado p o front
-        return acaoUser.save(novoUser);
+    public ResponseEntity<?> cadastrarNovoUser(@RequestBody TaskUser novoUser) {
+        return servicoUser.cadastroNovoUser(novoUser);
     }
 
-    @PostMapping("/GerenciadorTarefas/login")  //dps mudar p PostMapping, acho q n, conferir depois
+    @PostMapping("/GerenciadorTarefas/login")  
     public ResponseEntity<?> login(@RequestBody TaskUser usuario) {
-        return servicoUser.login(usuario); //MUDAR DEPOIS PARA O USER PROJECTION =====> id e nome
+        return servicoUser.login(usuario); 
     }
 
     @GetMapping("/GerenciadorTarefas/{userId}/conta") 
-    public UserProjection contaUser(@PathVariable Long userId) {
-        System.out.println("Bem-vindo a sua conta do user com ID:" + userId + "mostrando a info do user clicado");
-        return acaoUser.findByUserId(userId); 
+    public ResponseEntity<?> contaUser(@PathVariable String userId) {
+        return servicoUser.contaUser(userId); 
     }
 
-    @PutMapping("/GerenciadorTarefas/{userId}/editar_conta") 
+    @PutMapping("/GerenciadorTarefas/{userId}/editar_conta") //ACABA QUE TA SERVINDO COMO UM CRIAR - ent ta passando id que nao existe
     @Transactional
-    public TaskUser editarContaUser(@RequestBody TaskUser user) { 
-        System.out.println("o user edita dados da sua conta. ID: " + user.getUserId() + " - nome: " + user.getNome());
-        return acaoUser.save(user);
+    public ResponseEntity<?> editarContaUser(@RequestBody TaskUser user) { 
+        return servicoUser.editarContaUser(user);
     }
 
     @DeleteMapping("/GerenciadorTarefas/{userId}/apagar_conta") 
     @Transactional
-    public void removerContaUser(@PathVariable Long userId) {
-        System.out.println("removendo o user com ID: "+ userId);
-        acaoUser.removeByUserId(userId);
+    public ResponseEntity<?> removerContaUser(@PathVariable String userId) {
+        return servicoUser.removerContaUser(userId);
     }
 }

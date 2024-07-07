@@ -9,24 +9,29 @@ import org.springframework.stereotype.Service;
 
 import com.nossogrupo.GerenciadorTarefas.model.Mensagem;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
-// import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
 
 @Service
 public class UserService {
     
-    // @Autowired private TarefaRepository acaoTarefa; 
     @Autowired private TaskUserRepository acaoUser; 
     @Autowired private Mensagem mensagem;
 
-    //eu achava melhor aqui aumentar a validaçao dos dados - PARA CADASTRO TB
+    public ResponseEntity<?> cadastroNovoUser(TaskUser novoUser){ //depois rever o json que e enviado - E TEM QUE TRATAR A QUESTAO DE EMAIL REPETIDO
+        if (novoUser.getNome().equals("") || novoUser.getEmail().equals("") || novoUser.getSenha().equals("")){
+            mensagem.setMensagem("O nome não pode ser vazio");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(acaoUser.save(novoUser), HttpStatus.OK);
+        }
+    }
 
     public ResponseEntity<?> login(TaskUser usuario){ 
         ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
         for(TaskUser user : listaUsers){
-            if(user.getEmail().equals(usuario.getEmail()) && user.getSenha().equals(usuario.getSenha())){ //incrementar com algumas msgs
+            if(user.getEmail().equals(usuario.getEmail()) && user.getSenha().equals(usuario.getSenha())){ 
                 user.checaPrazoTarefas(); //vendo se tem tarefas atrasadas
-                acaoUser.save(user); //salvado no banco
+                acaoUser.save(user); //salvando no banco
                 mensagem.setMensagem("user encontrado");
 
                 TaskUser userJsonSimples = new TaskUser(user.getUserId(), user.getNome());
@@ -34,6 +39,58 @@ public class UserService {
                 return new ResponseEntity<>(userJsonSimples, HttpStatus.OK);
             }
         }
+        return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<?> contaUser(String stringUserId){
+        Long userId;
+        try {
+            userId =  Long.parseLong(stringUserId);
+        }
+        catch (NumberFormatException e) {
+            mensagem.setMensagem("valor inválido para userId");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        }
+
+        ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
+        
+        for(TaskUser user : listaUsers){
+            if(user.getUserId() == userId){
+                return new ResponseEntity<>(acaoUser.findByUserId(userId), HttpStatus.OK);
+            } 
+        }
+        mensagem.setMensagem("Não foi encontrada nenhuma pessoa com o ID fornecido");
+        return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<?> editarContaUser(TaskUser usuario){ //ta deixando acessar id de user nao existente - ta meio bugado
+        if (usuario.getNome().equals("") || usuario.getEmail().equals("") || usuario.getSenha().equals("")){
+            mensagem.setMensagem("Não são permitido campos vazios");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(acaoUser.save(usuario), HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<?> removerContaUser(String stringUserId){ 
+        Long userId;
+        try {
+            userId =  Long.parseLong(stringUserId);
+        }
+        catch (NumberFormatException e) {
+            mensagem.setMensagem("valor inválido para userId");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        }
+
+        ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
+        
+        for(TaskUser user : listaUsers){
+            if(user.getUserId() == userId){
+                acaoUser.removeByUserId(userId);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } 
+        }
+        mensagem.setMensagem("Não foi encontrada nenhuma pessoa com o ID fornecido");
         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
     }
 }

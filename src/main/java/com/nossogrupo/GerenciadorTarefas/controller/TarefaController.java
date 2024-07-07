@@ -1,12 +1,9 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// import com.nossogrupo.GerenciadorTarefas.model.Mensagem;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
 import com.nossogrupo.GerenciadorTarefas.service.TarefaService;
 
@@ -15,8 +12,6 @@ import jakarta.transaction.Transactional;
 @RestController
 @CrossOrigin(origins = "*")
 public class TarefaController { 
-
-
     @Autowired private TarefaService servicoTarefa;
     
 
@@ -46,8 +41,7 @@ public class TarefaController {
         return servicoTarefa.task(userId, tarefaId);
     }
 
-
-    @PutMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}/editar_task") 
+    @PutMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}/editar_task") //TA BUGADO
     @Transactional
     public ResponseEntity<?> editarTask(@PathVariable String userId, @PathVariable String tarefaId, @RequestBody Tarefa tarefa) {
         return servicoTarefa.editarTask(userId, tarefaId, tarefa);
