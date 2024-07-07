@@ -11,7 +11,6 @@ import jakarta.persistence.CascadeType;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.cglib.core.Local;
 
 @Entity
 @Table(name = "task_user")

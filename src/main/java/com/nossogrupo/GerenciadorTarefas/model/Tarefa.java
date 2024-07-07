@@ -12,7 +12,6 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDate;
 
-import org.springframework.cglib.core.Local;
 
 @Entity
 @Table(name = "tarefa")

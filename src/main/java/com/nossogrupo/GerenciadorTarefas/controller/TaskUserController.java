@@ -1,10 +1,13 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
 import com.nossogrupo.GerenciadorTarefas.model.projection.UserProjection;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
+import com.nossogrupo.GerenciadorTarefas.service.UserService;
 
 import jakarta.transaction.Transactional;
 
@@ -12,6 +15,8 @@ import jakarta.transaction.Transactional;
 public class TaskUserController {
 
     @Autowired TaskUserRepository userAcao;
+
+    @Autowired UserService userService;
 
     @PostMapping("/api/cadastro")
     @Transactional
@@ -21,10 +26,9 @@ public class TaskUserController {
         return userAcao.save(novoUser);
     }
 
-    @GetMapping("/api/login")  //dps mudar p PostMapping
-    public String login() {
-        //mandar o json do user logado p o front
-        return "oi esse é o signINsignUP - usuarios logados";
+    @GetMapping("/api/login")  //dps mudar p PostMapping, acho q n, conferir depois
+    public ResponseEntity<?> login(@RequestBody TaskUser usuario) {
+        return userService.login(usuario);
     }
 
     @GetMapping("/api/{userId}/conta") 

@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import org.springframework.cglib.core.Local;
+
 
 @Entity
 @Table(name = "colaborador")

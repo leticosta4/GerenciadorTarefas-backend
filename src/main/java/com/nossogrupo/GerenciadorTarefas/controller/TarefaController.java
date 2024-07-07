@@ -1,13 +1,13 @@
 package com.nossogrupo.GerenciadorTarefas.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+// import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-import com.nossogrupo.GerenciadorTarefas.model.Mensagem;
+// import com.nossogrupo.GerenciadorTarefas.model.Mensagem;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
 
@@ -20,70 +20,27 @@ import com.nossogrupo.GerenciadorTarefas.service.TarefaService;
 import jakarta.transaction.Transactional;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class TarefaController { 
 
     @Autowired private TarefaRepository acaoTarefa; 
     @Autowired private TaskUserRepository acaoUser; 
     @Autowired private TarefaService tarefaService;
     
-    @Autowired private Mensagem mensagem;
+    // @Autowired private Mensagem mensagem;
 
     @GetMapping("/api/{userId}/atividades")
      public ResponseEntity<?> atividades(@PathVariable String userId) {
-        Long userIdLong = tarefaService.validarStringUserId(userId);
-        if(userIdLong != null){
-            ResponseEntity<?> response = tarefaService.validarFindUserId(userIdLong);
-            if (response.getStatusCode() != HttpStatus.OK) {
-                return response;
-            }
-        }
-        
-        else {
-            mensagem.setMensagem("valor inválido para userId");
-            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(acaoTarefa.findByUserUserId(userIdLong), HttpStatus.OK);
-    }
+        return tarefaService.atividades(userId);
+    }   
 
 
     @GetMapping({"/api/{userId}/atividades/filtro_status_{status}",
                 "/api/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=asc",
                 "/api/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=desc",}) //ou ?ordem=dataCriacao&direcao=asc
-    public List<TarefaProjection> filtrarTasksStatus(@PathVariable Long userId, @PathVariable String status, @RequestParam(required = false) String ordem, @RequestParam(required = false, defaultValue = "asc") String direcao) {
-        
-        List<TarefaProjection> listaFiltradaStatus;
-
-        if (ordem != null) {
-            if (ordem.equalsIgnoreCase("dataCriacao")) {
-                if (direcao.equalsIgnoreCase("asc")) {
-                    listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatusOrderByDataCriacao(userId, status);
-                } else {
-                    listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatusOrderByDataCriacaoDesc(userId, status);
-                }
-                System.out.println("filtrando as tasks pelo status e ordenando por data de criacao " + direcao);
-            }
-            
-            else if (ordem.equalsIgnoreCase("dataFinal")) {
-                if (direcao.equalsIgnoreCase("asc")) {
-                    listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatusOrderByDataFinal(userId, status);
-                } else {
-                    listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatusOrderByDataFinalDesc(userId, status);
-                }
-                System.out.println("filtrando as tasks pelo status e ordenando por data data final " + direcao);
-            }
-            
-            else {
-                listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatus(userId, status);
-                System.out.println("filtrando tasks pelo status somente");
-            }
-        } else {
-            listaFiltradaStatus = acaoTarefa.findByUserUserIdAndStatus(userId, status);
-            System.out.println("filtrando tasks pelo status somente");
-        }
-
-        return listaFiltradaStatus;
-    }
+    public ResponseEntity<?> filtrarTasksStatus(@PathVariable String userId, @PathVariable String status, @RequestParam(required = false) String ordem, @RequestParam(required = false, defaultValue = "asc") String direcao) {
+        return tarefaService.filtrarTaskStatus(userId, status, ordem, direcao);
+    }    
 
     @PostMapping("/api/{userId}/atividades/criar_task") 
     @Transactional
