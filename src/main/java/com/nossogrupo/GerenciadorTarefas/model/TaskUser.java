@@ -79,7 +79,7 @@ public class TaskUser {
         List<Tarefa> listaTarefasUser = this.getListaTarefasUser();
         for(Tarefa tarefaUser : listaTarefasUser){
             if(LocalDate.now().isAfter(tarefaUser.getDataFinal())){
-                tarefaUser.setStatus("Em atraso");
+                tarefaUser.setStatus("Atrasada");
                 break;
             }
         }

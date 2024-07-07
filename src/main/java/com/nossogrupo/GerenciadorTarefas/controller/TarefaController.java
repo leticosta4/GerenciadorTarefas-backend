@@ -28,32 +28,32 @@ public class TarefaController {
     
     // @Autowired private Mensagem mensagem;
 
-    @GetMapping("/api/{userId}/atividades")
+    @GetMapping("/GerenciadorTarefas/{userId}/atividades")
      public ResponseEntity<?> atividades(@PathVariable String userId) {
         return servicoTarefa.atividades(userId);
     }   
 
-    @GetMapping({"/api/{userId}/atividades/filtro_status_{status}",
-                "/api/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=asc",
-                "/api/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=desc",}) 
+    @GetMapping({"/GerenciadorTarefas/{userId}/atividades/filtro_status_{status}",
+                "/GerenciadorTarefas/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=asc",
+                "/GerenciadorTarefas/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=desc",}) 
     public ResponseEntity<?> filtrarTasksStatus(@PathVariable String userId, @PathVariable String status, @RequestParam(required = false) String ordem, @RequestParam(required = false, defaultValue = "asc") String direcao) {
         return servicoTarefa.filtrarTaskStatus(userId, status, ordem, direcao);
     }    
 
-    @PostMapping("/api/{userId}/atividades/criar_task") 
+    @PostMapping("/GerenciadorTarefas/{userId}/atividades/criar_task") 
     @Transactional
     public ResponseEntity<?> criarTask(@PathVariable String userId, @RequestBody Tarefa novaTarefa){
         return servicoTarefa.criarTask(userId, novaTarefa);
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-    @GetMapping("/api/{userId}/atividades/{tarefaId}") 
+    @GetMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}") 
     public TarefaProjection task(@PathVariable Long userId, @PathVariable Long tarefaId) {
         System.out.println("mostrando info da task clicada com id: " + tarefaId);
         return acaoTarefa.findByTarefaId(tarefaId);
     }
 
-    @PutMapping("/api/{userId}/atividades/{tarefaId}/editar_task") 
+    @PutMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}/editar_task") 
     @Transactional
     public Tarefa editarTask(@PathVariable Long userId, @PathVariable Long tarefaId, @RequestBody Tarefa tarefa) {
         System.out.println("editando uma task:\nID:" + tarefa.getTarefaId() + "\nTITLE: " + tarefa.getTitulo());
@@ -61,7 +61,7 @@ public class TarefaController {
         return acaoTarefa.save(tarefa);
     }
 
-    @DeleteMapping("/api/{userId}/atividades/{tarefaId}/remover_task") //talvez seja afetado se tiver seleçao
+    @DeleteMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}/remover_task") //talvez seja afetado se tiver seleçao
     @Transactional
     public void removerTask(@PathVariable Long userId, @PathVariable Long tarefaId) {
         System.out.println("removendo a task com ID: "+ tarefaId);

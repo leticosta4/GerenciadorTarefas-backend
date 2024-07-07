@@ -122,13 +122,13 @@ public class Tarefa {
             this.descricao = "Descrição para " + this.titulo;
         }
         if (this.status == null){
-            this.status = "A fazer";
+            this.status = "Pendente";
         }
         if (this.dataCriacao == null){
             this.dataCriacao = LocalDate.now();;
         }
         if(LocalDate.now().isAfter(this.getDataFinal())){
-            this.setStatus("Em atraso");
+            this.setStatus("Atrasada");
         }
         if (this.corFundo == null){
             this.corFundo = "#81ACF0";
