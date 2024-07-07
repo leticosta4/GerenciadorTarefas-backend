@@ -5,9 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "colaborador")
+@Table(name = "colaborador", uniqueConstraints = {@UniqueConstraint(columnNames = "colaboradorId"), @UniqueConstraint(columnNames = "github"), @UniqueConstraint(columnNames = "linkedin")})
 public class Colaborador {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

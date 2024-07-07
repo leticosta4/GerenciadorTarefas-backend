@@ -52,6 +52,9 @@ public class TarefaController {
         System.out.println("mostrando info da task clicada com id: " + tarefaId);
         return acaoTarefa.findByTarefaId(tarefaId);
     }
+    // public ResponseEntity<?> task(@PathVariable String userId, @PathVariable String tarefaId) {
+    //     return servicoTarefa.task(userId, tarefaId);
+    // }
 
     @PutMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}/editar_task") 
     @Transactional

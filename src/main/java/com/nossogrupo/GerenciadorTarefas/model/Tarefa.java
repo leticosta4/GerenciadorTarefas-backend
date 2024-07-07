@@ -9,12 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "tarefa")
+@Table(name = "tarefa", uniqueConstraints = {@UniqueConstraint(columnNames = "tarefaId")})
 public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +37,14 @@ public class Tarefa {
     public Tarefa(Long tarefaId, String titulo, String descricao, String status, String dataCriacao, String dataFinal, String corFundo, String local, TaskUser user){
         this.tarefaId = tarefaId;
         this.titulo = titulo;
-        if (this.descricao == null){ this.descricao = "Descrição para " + this.titulo; } else { this.descricao = descricao; }
+        this.descricao = descricao;
         this.status = status;
-        if (this.dataCriacao == null){ this.dataCriacao = LocalDate.now();} else { this.dataCriacao = LocalDate.parse(dataCriacao);;}
-        this.dataFinal = LocalDate.parse(dataFinal);
-        if (this.corFundo == null){ this.corFundo = "#81ACF0"; } else {  this.corFundo = corFundo; }
-        if (this.local == null){ this.local = "Nenhum local definido pelo usuário"; } else { this.local = local; }
+        this.dataCriacao = (dataCriacao != null) ? LocalDate.parse(dataCriacao) : null;
+        this.dataFinal = (dataFinal != null) ? LocalDate.parse(dataFinal) : null;
+        this.corFundo = corFundo;
+        this.local = local;
         this.user = user;
+        setandoValoresPadrao();
     }
 
     public Long getTarefaId(){

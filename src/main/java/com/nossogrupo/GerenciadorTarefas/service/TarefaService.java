@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.nossogrupo.GerenciadorTarefas.model.Mensagem;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
-// import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
+import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
 import com.nossogrupo.GerenciadorTarefas.repository.TarefaRepository;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
 
@@ -87,6 +87,7 @@ public class TarefaService {
     }
 
     public ResponseEntity<?> criarTask(String stringUserId, Tarefa novaTarefa){
+        Boolean naoEncontrouUserLista = false;
         Long userId;
         try {
             userId =  Long.parseLong(stringUserId);
@@ -96,16 +97,18 @@ public class TarefaService {
             return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         }
 
-        //tratar a nao existencia do usuario
-        // ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
-        // for(TaskUser user : listaUsers){
-        //     if(user.getUserId() == userId){
-        //         return new ResponseEntity<>(acaoTarefa.findByUserUserId(userId), HttpStatus.OK);
-        //     } 
-        // }
-        // mensagem.setMensagem("Não foi encontrada nenhuma pessoa com o ID fornecido");
-        // return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+        ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
+        for(TaskUser user : listaUsers){
+            if(user.getUserId() == userId){
+                return new ResponseEntity<>(acaoTarefa.findByUserUserId(userId), HttpStatus.OK);
+            } else { naoEncontrouUserLista = true; }
+        }
 
+        if(naoEncontrouUserLista){
+            mensagem.setMensagem("Usuário não encontrado com o ID fornecido");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+        }
+    
         TaskUser usuarioDaVez = acaoUser.findById(userId).orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + userId));
         novaTarefa.setUser(usuarioDaVez); //esse tratamento garante
 
@@ -121,4 +124,32 @@ public class TarefaService {
         }
     }
 
+    // public ResponseEntity<?> task(String stringUserId, String stringTarefaId){
+    //     Boolean naoEncontrouUserLista = false;
+    //     Long userId, tarefaId;
+    //     try {
+    //         userId =  Long.parseLong(stringUserId);
+    //         tarefaId = Long.parseLong(stringTarefaId);
+    //     }
+    //     catch (NumberFormatException e) {
+    //         mensagem.setMensagem("valor inválido para userId ou para tarefaId");
+    //         return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+    //     }
+
+    //     if(acaoUser.findByUserId(userId) == null){
+    //         mensagem.setMensagem("Usuário não encontrado com o ID fornecido");
+    //         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+    //     }
+        
+    //     TarefaProjection tarefaClicada = acaoTarefa.findByTarefaId(tarefaId);
+    //     System.out.println("id tarefa clicada: " + tarefaClicada.getTarefaId());
+    //     System.out.println("titulo tarefa clicada: " + tarefaClicada.getTitulo());
+
+    //     if(tarefaClicada == null){
+    //         mensagem.setMensagem("A tarefa não foi encontrada na lista de tasks do user");
+    //         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+    //     } else {
+    //         return new ResponseEntity<>(tarefaClicada, HttpStatus.OK);
+    //     }
+    // }
 }

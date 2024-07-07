@@ -13,5 +13,4 @@ public interface TaskUserRepository extends JpaRepository<TaskUser, Long>{
     ArrayList <TaskUser> findAllBy();
     UserProjection findByUserId(Long userId);
     void removeByUserId(Long userId);
-    //void saveAll(Arrays listaUsers);
 }

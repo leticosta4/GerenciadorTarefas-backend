@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.CascadeType;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "task_user")
+@Table(name = "task_user", uniqueConstraints = {@UniqueConstraint(columnNames = "userId"), @UniqueConstraint(columnNames = "email")})
 public class TaskUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
