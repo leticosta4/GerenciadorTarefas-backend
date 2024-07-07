@@ -5,7 +5,8 @@ import java.util.List;
 import com.nossogrupo.GerenciadorTarefas.model.Tarefa;
 
 public interface UserProjection {
+    long getUserId();
     String getNome();
     String getEmail();
-    List<Tarefa> getListaTarefasUser();
+    List<Tarefa> getListaTarefasUser(); //ver a questao que aninhamento
 }

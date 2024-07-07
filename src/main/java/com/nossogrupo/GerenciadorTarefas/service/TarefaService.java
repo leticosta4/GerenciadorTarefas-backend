@@ -1,0 +1,8 @@
+package com.nossogrupo.GerenciadorTarefas.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class TarefaService {
+    
+}

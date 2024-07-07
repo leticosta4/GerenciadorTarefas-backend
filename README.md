@@ -1,5 +1,7 @@
 # Gerenciador de Tarefas - backend
 
+O Colaborador só serve para mandar coisas para o frontend
+
 ## Alerta
 Sempre que mexer/alterar qualquer coisa relacionado ao banco de dados, checar o arquivo `application.properties` caso precise de mais alguma configuração ou alteração em alguma existente
 

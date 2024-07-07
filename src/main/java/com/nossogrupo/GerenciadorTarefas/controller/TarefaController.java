@@ -20,8 +20,6 @@ public class TarefaController {
     @Autowired private TarefaRepository acaoTarefa; 
     @Autowired private TaskUserRepository acaoUser; 
 
-    ///acho que tem que especificar o user aqui em muitas rotas - questao de padronizacao e seguranca
-
     @GetMapping("/api/{userId}/atividades")
     public List<TarefaProjection> atividades(@PathVariable Long userId) {
         System.out.println("Bem-vindo ao Gerenciador de Tarefas! user com ID:" + userId);
@@ -92,21 +90,21 @@ public class TarefaController {
         return acaoTarefa.save(novaTarefa);
     }
 
-    @GetMapping("/api/{userId}/atividades/{tarefaId}") //acho que tem que especificar o user antes do id da tarefa
+    @GetMapping("/api/{userId}/atividades/{tarefaId}") 
     public TarefaProjection task(@PathVariable Long userId, @PathVariable Long tarefaId) {
         System.out.println("mostrando info da task clicada com id: " + tarefaId);
         
         return acaoTarefa.findByTarefaId(tarefaId);
     }
 
-    @PutMapping("/api/{userId}/atividades/{tarefaId}/editar_task") //acho que tem que passar o id especifico da task talvez
+    @PutMapping("/api/{userId}/atividades/{tarefaId}/editar_task") 
     @Transactional
     public Tarefa editarTask(@PathVariable Long userId, @PathVariable Long tarefaId, @RequestBody Tarefa tarefa) {
         System.out.println("editando uma task:\nID:" + tarefa.getTarefaId() + "\nTITLE: " + tarefa.getTitulo());
         return acaoTarefa.save(tarefa);
     }
 
-    @DeleteMapping("/api/{userId}/atividades/{tarefaId}/remover_task") 
+    @DeleteMapping("/api/{userId}/atividades/{tarefaId}/remover_task") //talvez seja afetado se tiver seleçao
     @Transactional
     public void removerTask(@PathVariable Long userId, @PathVariable Long tarefaId) {
         System.out.println("removendo a task com ID: "+ tarefaId);

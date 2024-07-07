@@ -17,21 +17,23 @@ public class TaskUserController {
     @Transactional
     public TaskUser cadastrarNovoUser(@RequestBody TaskUser novoUser) {
         System.out.println("oi esse é o signINsignUP - usuarios nao logados");
+        //mandar o json do user logado p o front
         return userAcao.save(novoUser);
     }
 
     @GetMapping("/api/login")  //dps mudar p PostMapping
     public String login() {
+        //mandar o json do user logado p o front
         return "oi esse é o signINsignUP - usuarios logados";
     }
 
     @GetMapping("/api/{userId}") 
-    public UserProjection contUser(@PathVariable Long userId) {
-        System.out.println("Bem-vindo a sua conta do user com ID:" + userId + "mostrando a info da task clicada");
+    public UserProjection contaUser(@PathVariable Long userId) {
+        System.out.println("Bem-vindo a sua conta do user com ID:" + userId + "mostrando a info do user clicado");
         return userAcao.findByUserId(userId); 
     }
 
-    @PutMapping("/api/{userId}/editar_conta") //acho que tem que passar o id especifico do user talvez
+    @PutMapping("/api/{userId}/editar_conta") 
     @Transactional
     public TaskUser editarContaUser(@RequestBody TaskUser user) { 
         System.out.println("o user edita dados da sua conta. ID: " + user.getUserId() + " - nome: " + user.getNome());
@@ -40,7 +42,7 @@ public class TaskUserController {
 
     @DeleteMapping("/api/{userId}/apagar_conta") 
     @Transactional
-    public void removerColaborador(@PathVariable Long userId) {
+    public void removerContaUser(@PathVariable Long userId) {
         System.out.println("removendo o user com ID: "+ userId);
         userAcao.removeByUserId(userId);
     }

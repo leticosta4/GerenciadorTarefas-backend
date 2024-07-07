@@ -15,7 +15,7 @@ public class ColaboradorController {
 
     //TALVEZ TAMBEM PRECISEM DO ID DO COLABORADOR POR QUESTAO DE SEGURANCA
 
-    @GetMapping("/api/sobre") 
+    @GetMapping("/api/sobre")  //colocar condicao para o user logado
     public ArrayList<Colaborador> sobre() {
         System.out.println("sobre os programadores");
         ArrayList<Colaborador> listaColaboradores = acaoColaborador.findAll();
@@ -24,25 +24,25 @@ public class ColaboradorController {
         return  listaColaboradores;
     }
 
-    @PostMapping("/api/add_colaborador") 
-    @Transactional
-    public Colaborador criarColaborador(@RequestBody Colaborador novoColaborador) {
-        System.out.println("adicionando um colaborador");
-        return acaoColaborador.save(novoColaborador);
-    }
+    // @PostMapping("/api/add_colaborador") 
+    // @Transactional
+    // public Colaborador criarColaborador(@RequestBody Colaborador novoColaborador) {
+    //     System.out.println("adicionando um colaborador");
+    //     return acaoColaborador.save(novoColaborador);
+    // }
 
-    @PutMapping("/api/editar_colaborador") //talvez tenha que mudar depois p especificar na rota
-    @Transactional
-    public Colaborador editarColaborador(@RequestBody Colaborador colaborador) {
-        System.out.println("edicao do colaborador. ID: " + colaborador.getColaboradorId() + "- nome: " + colaborador.getNome());
-        return acaoColaborador.save(colaborador);
-    }
+    // @PutMapping("/api/editar_colaborador") //faltou especificar o id do colaborador
+    // @Transactional
+    // public Colaborador editarColaborador(@RequestBody Colaborador colaborador) {
+    //     System.out.println("edicao do colaborador. ID: " + colaborador.getColaboradorId() + "- nome: " + colaborador.getNome());
+    //     return acaoColaborador.save(colaborador);
+    // }
 
-    @DeleteMapping("/api/remover_colaborador/{colaboradorId}") 
-    @Transactional
-    public void removerColaborador(@PathVariable Long colaboradorId) {
-        System.out.println("removendo o colaborador com ID: "+ colaboradorId);
-        acaoColaborador.removeByColaboradorId(colaboradorId);
-    }
+    // @DeleteMapping("/api/remover_colaborador/{colaboradorId}") 
+    // @Transactional
+    // public void removerColaborador(@PathVariable Long colaboradorId) {
+    //     System.out.println("removendo o colaborador com ID: "+ colaboradorId);
+    //     acaoColaborador.removeByColaboradorId(colaboradorId);
+    // }
     
 }

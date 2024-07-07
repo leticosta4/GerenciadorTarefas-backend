@@ -27,7 +27,6 @@ public class Tarefa {
     private LocalDate dataFinal;
     private String corFundo; 
     private String local;
-    //ver como vamos tratar o anexo de imagem depois
 
     @ManyToOne
     @JoinColumn(name = "userId")
