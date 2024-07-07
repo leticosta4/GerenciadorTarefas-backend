@@ -4,6 +4,7 @@ package com.nossogrupo.GerenciadorTarefas.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class GeralController {
 
     //ver como criar com o autowired p instancia de objetos aqui

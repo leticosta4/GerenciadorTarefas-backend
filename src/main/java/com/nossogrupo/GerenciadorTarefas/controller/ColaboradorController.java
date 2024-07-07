@@ -10,6 +10,7 @@ import com.nossogrupo.GerenciadorTarefas.repository.ColaboradorRepository;
 //import jakarta.transaction.Transactional;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class ColaboradorController {
     @Autowired private ColaboradorRepository acaoColaborador;
 

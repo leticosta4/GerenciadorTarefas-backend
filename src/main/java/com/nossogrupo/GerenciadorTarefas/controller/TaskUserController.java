@@ -12,6 +12,7 @@ import com.nossogrupo.GerenciadorTarefas.service.UserService;
 import jakarta.transaction.Transactional;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class TaskUserController {
 
     @Autowired TaskUserRepository userAcao;
