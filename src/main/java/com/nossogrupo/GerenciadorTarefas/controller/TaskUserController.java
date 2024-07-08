@@ -35,10 +35,10 @@ public class TaskUserController {
         return servicoUser.contaUser(userId); 
     }
 
-    @PutMapping("/GerenciadorTarefas/{userId}/editar_conta") //ACABA QUE TA SERVINDO COMO UM CRIAR - ent ta passando id que nao existe
+    @PutMapping("/GerenciadorTarefas/{userId}/editar_conta") 
     @Transactional
-    public ResponseEntity<?> editarContaUser(@RequestBody TaskUser user) { 
-        return servicoUser.editarContaUser(user);
+    public ResponseEntity<?> editarContaUser(@PathVariable String userId, @RequestBody TaskUser user) { 
+        return servicoUser.editarContaUser(userId, user);
     }
 
     @DeleteMapping("/GerenciadorTarefas/{userId}/apagar_conta") 

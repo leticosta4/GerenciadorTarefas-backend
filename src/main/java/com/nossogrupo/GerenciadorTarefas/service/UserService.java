@@ -63,7 +63,31 @@ public class UserService {
         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<?> editarContaUser(TaskUser usuario){ //ta deixando acessar id de user nao existente - ta meio bugado
+    public ResponseEntity<?> editarContaUser(String stringUserId, TaskUser usuario){ //ta deixando acessar id de user nao existente - ta meio bugado
+        Long userId;
+        Boolean encontrouUserNaLista = false;
+        try {
+            userId =  Long.parseLong(stringUserId);
+        }
+        catch (NumberFormatException e) {
+            mensagem.setMensagem("valor inválido para userId");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        }
+
+        ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
+        
+        for(TaskUser user : listaUsers){
+            if(user.getUserId() == userId){
+                encontrouUserNaLista = true;
+                break;
+            } 
+        } 
+
+        if(!encontrouUserNaLista){
+            mensagem.setMensagem("Não foi encontrada nenhuma pessoa com o ID fornecido");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+        } 
+
         if (usuario.getNome().equals("") || usuario.getEmail().equals("") || usuario.getSenha().equals("")){
             mensagem.setMensagem("Não são permitido campos vazios");
             return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);

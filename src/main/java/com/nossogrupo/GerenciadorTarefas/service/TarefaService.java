@@ -153,7 +153,7 @@ public class TarefaService {
         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<?> editarTask(String stringUserId, String stringTarefaId, Tarefa tarefa){
+    public ResponseEntity<?> editarTask(String stringUserId, String stringTarefaId, Tarefa tarefa){ //BUGADO
         Long userId, tarefaId;
         try {
             userId =  Long.parseLong(stringUserId);
@@ -164,9 +164,16 @@ public class TarefaService {
             return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         }
 
-        if(acaoUser.findByUserId(userId) == null){
+        if(acaoUser.findByUserId(userId) == null){ /////////////////////////
             mensagem.setMensagem("Usuário não encontrado com o ID fornecido");
-            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND); 
+        }
+
+        ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
+        for(TaskUser user : listaUsers){
+            if ( user.getUserId() == userId){
+                tarefa.setUser(user);
+            }
         }
         
         List<TarefaProjection> listaTarefasUser = acaoTarefa.findByUserUserId(userId);
