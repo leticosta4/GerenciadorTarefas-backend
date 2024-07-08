@@ -17,9 +17,12 @@ public class UserService {
     @Autowired private TaskUserRepository acaoUser; 
     @Autowired private Mensagem mensagem;
 
-    public ResponseEntity<?> cadastroNovoUser(TaskUser novoUser){ //TEM QUE TRATAR A QUESTAO DE EMAIL REPETIDO
+    public ResponseEntity<?> cadastroNovoUser(TaskUser novoUser){ //depois rever o json que e enviado - E TEM QUE TRATAR A QUESTAO DE EMAIL REPETIDO
         if (novoUser.getNome().equals("") || novoUser.getEmail().equals("") || novoUser.getSenha().equals("")){
             mensagem.setMensagem("O nome não pode ser vazio");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        } else if (acaoUser.existsByEmail(novoUser.getEmail())){
+            mensagem.setMensagem("O email tem que ser unico");
             return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(acaoUser.save(novoUser), HttpStatus.OK);

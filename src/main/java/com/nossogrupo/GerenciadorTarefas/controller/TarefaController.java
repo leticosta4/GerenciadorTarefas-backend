@@ -42,12 +42,6 @@ public class TarefaController {
         return servicoTarefa.task(userId, tarefaId);
     }
 
-    // @PutMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}/editar_task") 
-    // @Transactional
-    // public ResponseEntity<?> editarTask(@PathVariable String userId, @PathVariable String tarefaId, @RequestBody Tarefa tarefa) {
-    //     return servicoTarefa.editarTask(userId, tarefaId, tarefa);
-    // }
-
     @PutMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}/{action}") 
     @Transactional
     public ResponseEntity<?> editarTask(@PathVariable String userId, @PathVariable String tarefaId, @PathVariable String action, @RequestBody Tarefa tarefa) {
