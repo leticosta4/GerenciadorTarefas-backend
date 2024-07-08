@@ -28,8 +28,12 @@ public class TarefaController {
                 "/GerenciadorTarefas/{userId}/atividades/filtro_status_{status}?ordem={ordem}&direcao=desc",}) 
     public ResponseEntity<?> filtrarTasksStatus(@PathVariable String userId, @PathVariable String status, @RequestParam(required = false) String ordem, @RequestParam(required = false, defaultValue = "asc") String direcao) {
         return servicoTarefa.filtrarTaskStatus(userId, status, ordem, direcao);
-    }    
-
+    }
+    
+    @GetMapping("/GerenciadorTarefas/{userId}/atividades/pesquisarTarefa_{pesquisa}")
+    public ResponseEntity<?> pesquisarTarefa(@PathVariable String userId, @PathVariable String pesquisa){
+        return servicoTarefa.pesquisarTarefa(userId, pesquisa);
+    }
 
     @PostMapping("/GerenciadorTarefas/{userId}/atividades/criar_task") 
     @Transactional
@@ -56,7 +60,7 @@ public class TarefaController {
         }
     }
 
-    @DeleteMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}/remover_task") //talvez seja afetado se tiver seleçao
+    @DeleteMapping("/GerenciadorTarefas/{userId}/atividades/{tarefaId}/remover_task") 
     @Transactional
     public ResponseEntity<?> removerTask(@PathVariable String userId, @PathVariable String tarefaId) {
         return servicoTarefa.removerTask(userId, tarefaId);

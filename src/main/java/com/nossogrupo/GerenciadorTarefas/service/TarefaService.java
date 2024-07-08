@@ -87,6 +87,26 @@ public class TarefaService {
         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
     }
 
+    public ResponseEntity<?> pesquisarTarefa(String stringUserId, String pesquisa){
+        Long userId;
+        try {
+            userId = Long.parseLong(stringUserId);
+        } catch (NumberFormatException e) {
+            mensagem.setMensagem("valor inválido para userId");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        }
+
+        boolean userExists = acaoUser.existsByUserId(userId);
+        
+        if (!userExists) {
+            mensagem.setMensagem("Não foi encontrada nenhuma pessoa com o ID fornecido");
+            return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
+        }
+
+        List<TarefaProjection> tarefas = acaoTarefa.findByUserIdAndTituloContaining(userId, pesquisa);
+        return new ResponseEntity<>(tarefas, HttpStatus.OK);
+    }
+    
     public ResponseEntity<?> criarTask(String stringUserId, Tarefa novaTarefa){
         Boolean encontrouUserLista = false;
         Long userId;
