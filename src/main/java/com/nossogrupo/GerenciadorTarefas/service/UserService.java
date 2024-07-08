@@ -33,8 +33,8 @@ public class UserService {
         ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
         for(TaskUser user : listaUsers){
             if(user.getEmail().equals(usuario.getEmail()) && user.getSenha().equals(usuario.getSenha())){ 
-                user.checaPrazoTarefas(); //vendo se tem tarefas atrasadas
-                acaoUser.save(user); //salvando no banco
+                user.checaPrazoTarefas(); 
+                acaoUser.save(user); 
                 mensagem.setMensagem("user encontrado");
 
                 TaskUser userJsonSimples = new TaskUser(user.getUserId(), user.getNome());

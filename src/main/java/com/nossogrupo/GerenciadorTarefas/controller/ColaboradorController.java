@@ -14,8 +14,6 @@ import com.nossogrupo.GerenciadorTarefas.repository.ColaboradorRepository;
 public class ColaboradorController {
     @Autowired private ColaboradorRepository acaoColaborador;
 
-    //TALVEZ TAMBEM PRECISEM DO ID DO COLABORADOR POR QUESTAO DE SEGURANCA
-
     @GetMapping({"/GerenciadorTarefas/sobre", "/GerenciadorTarefas/{userId}/sobre"})  
     public ArrayList<Colaborador> sobre(@PathVariable(required = false) String userId) {
         if (userId != null) {

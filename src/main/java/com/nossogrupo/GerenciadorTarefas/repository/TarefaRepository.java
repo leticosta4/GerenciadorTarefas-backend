@@ -11,7 +11,7 @@ import com.nossogrupo.GerenciadorTarefas.model.projection.TarefaProjection;
 import java.util.List;
 
 @Repository
-public interface TarefaRepository extends JpaRepository<Tarefa, Long>{ //chamar o tipo de dado da chave primaria
+public interface TarefaRepository extends JpaRepository<Tarefa, Long>{ 
     public static final TaskUserRepository userAcao = null;
     boolean existsByTarefaId(Long tarefaId);
     ArrayList <TarefaProjection> findAllBy(); //revisar uso depois
