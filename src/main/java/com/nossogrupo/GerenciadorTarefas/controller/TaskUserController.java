@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.nossogrupo.GerenciadorTarefas.model.TaskUser;
-import com.nossogrupo.GerenciadorTarefas.model.projection.UserProjection;
+//import com.nossogrupo.GerenciadorTarefas.model.projection.UserProjection;
 import com.nossogrupo.GerenciadorTarefas.repository.TaskUserRepository;
 import com.nossogrupo.GerenciadorTarefas.service.UserService;
 
