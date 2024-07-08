@@ -21,6 +21,9 @@ public class UserService {
         if (novoUser.getNome().equals("") || novoUser.getEmail().equals("") || novoUser.getSenha().equals("")){
             mensagem.setMensagem("O nome não pode ser vazio");
             return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
+        } else if (acaoUser.existsByEmail(novoUser.getEmail())){
+            mensagem.setMensagem("O email tem que ser unico");
+            return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(acaoUser.save(novoUser), HttpStatus.OK);
         }
