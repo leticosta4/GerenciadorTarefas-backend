@@ -32,7 +32,7 @@ public class Tarefa {
     @JoinColumn(name = "userId")
     private TaskUser user; //chave estrangeira
 
-    public Tarefa() {} //construtor padrao jpa
+    public Tarefa() {} 
 
     public Tarefa(Long tarefaId, String titulo, String descricao, String status, String dataCriacao, String dataFinal, String corFundo, String local, TaskUser user){
         this.tarefaId = tarefaId;

@@ -29,7 +29,7 @@ public class GerenciadorTarefasApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		Colaborador c1 = new Colaborador((long) 1, "Letícia", "Backend", "https://github.com/leticosta4", "www.linkedin.com/in/letícia-almeida-9704162a0/", "#800080", "#f109af");
+		Colaborador c1 = new Colaborador((long) 1, "Letícia", "Backend", "https://github.com/leticosta4", "https://www.linkedin.com/in/letícia-almeida-9704162a0/", "#800080", "#f109af");
 		Colaborador c2 = new Colaborador((long) 2, "Alysson", "Frontend", "https://github.com/VerttB", "https://www.linkedin.com/in/alysson-dos-anjos-00b431305/", "#ff00aa", "#ff5bc8");
 		Colaborador c3 = new Colaborador((long) 3, "Kaik", "Frontend", "https://github.com/Syrex72", "https://www.linkedin.com/in/kaik-costa-pereira-655544273/",  "#FF0000", "#ffc177");
 		Colaborador c4 = new Colaborador((long) 4, "Cainan", "Backend", "https://github.com/Cainan-bas", null, "#0000FF",  "#0070ff");

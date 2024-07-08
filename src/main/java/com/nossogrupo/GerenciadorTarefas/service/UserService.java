@@ -17,7 +17,7 @@ public class UserService {
     @Autowired private TaskUserRepository acaoUser; 
     @Autowired private Mensagem mensagem;
 
-    public ResponseEntity<?> cadastroNovoUser(TaskUser novoUser){ //depois rever o json que e enviado - E TEM QUE TRATAR A QUESTAO DE EMAIL REPETIDO
+    public ResponseEntity<?> cadastroNovoUser(TaskUser novoUser){ //TEM QUE TRATAR A QUESTAO DE EMAIL REPETIDO
         if (novoUser.getNome().equals("") || novoUser.getEmail().equals("") || novoUser.getSenha().equals("")){
             mensagem.setMensagem("O nome não pode ser vazio");
             return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
@@ -30,8 +30,8 @@ public class UserService {
         ArrayList <TaskUser> listaUsers = acaoUser.findAllBy();
         for(TaskUser user : listaUsers){
             if(user.getEmail().equals(usuario.getEmail()) && user.getSenha().equals(usuario.getSenha())){ 
-                user.checaPrazoTarefas(); //vendo se tem tarefas atrasadas
-                acaoUser.save(user); //salvando no banco
+                user.checaPrazoTarefas(); 
+                acaoUser.save(user); 
                 mensagem.setMensagem("user encontrado");
 
                 TaskUser userJsonSimples = new TaskUser(user.getUserId(), user.getNome());

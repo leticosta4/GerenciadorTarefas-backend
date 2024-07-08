@@ -153,18 +153,17 @@ public class TarefaService {
         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<?> editarTask(String stringUserId, String stringTarefaId, Tarefa tarefa){ 
+    public ResponseEntity<?> editarTask(String stringUserId, String stringTarefaId, Tarefa tarefa, int flagConcluida){ 
         Long userId, tarefaId;
         try {
             userId =  Long.parseLong(stringUserId);
             tarefaId = Long.parseLong(stringTarefaId);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             mensagem.setMensagem("valor inválido para userId ou para tarefaId");
             return new ResponseEntity<>(mensagem, HttpStatus.BAD_REQUEST);
         }
 
-        if(acaoUser.findByUserId(userId) == null){ /////////////////////////
+        if(acaoUser.findByUserId(userId) == null){ 
             mensagem.setMensagem("Usuário não encontrado com o ID fornecido");
             return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND); 
         }
@@ -179,6 +178,7 @@ public class TarefaService {
         List<TarefaProjection> listaTarefasUser = acaoTarefa.findByUserUserId(userId);
         for(TarefaProjection tarefaUser : listaTarefasUser){
             if(tarefaUser.getTarefaId() == tarefaId){
+                if(flagConcluida == 1){ tarefa.setStatus("Concluída");}
                 tarefa.setandoValoresPadrao();
                 return new ResponseEntity<>(acaoTarefa.save(tarefa), HttpStatus.OK);
             }
