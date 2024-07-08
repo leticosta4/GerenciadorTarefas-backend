@@ -153,7 +153,7 @@ public class TarefaService {
         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<?> editarTask(String stringUserId, String stringTarefaId, Tarefa tarefa){ //BUGADO
+    public ResponseEntity<?> editarTask(String stringUserId, String stringTarefaId, Tarefa tarefa){ 
         Long userId, tarefaId;
         try {
             userId =  Long.parseLong(stringUserId);
@@ -179,6 +179,7 @@ public class TarefaService {
         List<TarefaProjection> listaTarefasUser = acaoTarefa.findByUserUserId(userId);
         for(TarefaProjection tarefaUser : listaTarefasUser){
             if(tarefaUser.getTarefaId() == tarefaId){
+                tarefa.setandoValoresPadrao();
                 return new ResponseEntity<>(acaoTarefa.save(tarefa), HttpStatus.OK);
             }
         }
