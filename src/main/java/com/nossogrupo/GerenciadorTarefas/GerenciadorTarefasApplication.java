@@ -73,8 +73,40 @@ public class GerenciadorTarefasApplication implements CommandLineRunner{
 		Tarefa t18 = new Tarefa((long) 18, "dormir", "necessário demais", "Atrasada", null, "2024-07-09", null, null, u2);
         Tarefa t19 = new Tarefa((long) 19, "dormir", "necessário demais", "Em andamento", null, "2024-07-09", null, null, u3);
         Tarefa t20 = new Tarefa((long) 20, "dormir", "necessário demais", "Pendente", null, "2024-07-09", null, null, u4);
+
+		Tarefa t21 = new Tarefa((long) 21, "ler", "importante", "Concluída", null, "2024-07-10", null, null, u1);
+		Tarefa t22 = new Tarefa((long) 22, "exercitar", "saúde", "Atrasada", null, "2024-07-10", null, null, u2);
+		Tarefa t23 = new Tarefa((long) 23, "meditar", "necessário", "Em andamento", null, "2024-07-10", null, null, u3);
+		Tarefa t24 = new Tarefa((long) 24, "caminhar", "saúde", "Pendente", null, "2024-07-10", null, null, u4);
+		Tarefa t25 = new Tarefa((long) 25, "estudar", "necessário demais", "Concluída", null, "2024-07-11", null, null, u1);
+		Tarefa t26 = new Tarefa((long) 26, "trabalhar", "importante", "Atrasada", null, "2024-07-11", null, null, u2);
 		
-		listaTarefas.addAll(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+		Tarefa t27 = new Tarefa((long) 27, "cozinhar", "necessário", "Em andamento", null, "2024-07-11", null, null, u3);
+		Tarefa t28 = new Tarefa((long) 28, "limpar", "necessário", "Pendente", null, "2024-07-11", null, null, u4);
+		Tarefa t29 = new Tarefa((long) 29, "comprar", "importante", "Concluída", null, "2024-07-12", null, null, u1);
+		Tarefa t30 = new Tarefa((long) 30, "planejar", "necessário", "Atrasada", null, "2024-07-12", null, null, u2);
+		Tarefa t31 = new Tarefa((long) 31, "organizar", "importante", "Em andamento", null, "2024-07-12", null, null, u3);
+		Tarefa t32 = new Tarefa((long) 32, "viajar", "necessário", "Pendente", null, "2024-07-12", null, null, u4);
+		
+		Tarefa t33 = new Tarefa((long) 33, "descansar", "necessário demais", "Concluída", null, "2024-07-13", null, null, u1);
+		Tarefa t34 = new Tarefa((long) 34, "jogar", "lazer", "Atrasada", null, "2024-07-13", null, null, u2);
+		Tarefa t35 = new Tarefa((long) 35, "assistir TV", "lazer", "Em andamento", null, "2024-07-13", null, null, u3);
+		Tarefa t36 = new Tarefa((long) 36, "nadar", "saúde", "Pendente", null, "2024-07-13", null, null, u4);
+		Tarefa t37 = new Tarefa((long) 37, "estudar", "necessário", "Concluída", null, "2024-07-14", null, null, u1);
+		Tarefa t38 = new Tarefa((long) 38, "exercitar", "saúde", "Atrasada", null, "2024-07-14", null, null, u2);
+		
+		Tarefa t39 = new Tarefa((long) 39, "meditar", "necessário demais", "Em andamento", null, "2024-07-14", null, null, u3);
+		Tarefa t40 = new Tarefa((long) 40, "caminhar", "saúde", "Pendente", null, "2024-07-14", null, null, u4);
+		Tarefa t41 = new Tarefa((long) 41, "ler", "importante", "Concluída", null, "2024-07-15", null, null, u1);
+		Tarefa t42 = new Tarefa((long) 42, "trabalhar", "importante", "Atrasada", null, "2024-07-15", null, null, u2);
+		Tarefa t43 = new Tarefa((long) 43, "cozinhar", "necessário demais", "Em andamento", null, "2024-07-15", null, null, u3);
+		Tarefa t44 = new Tarefa((long) 44, "limpar", "necessário", "Pendente", null, "2024-07-15", null, null, u4);
+		Tarefa t45 = new Tarefa((long) 45, "comprar", "importante", "Concluída", null, "2024-07-16", null, null, u1);
+
+		
+		listaTarefas.addAll(Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, 
+		t21, t22, t23, t24, t25, t26, t27, t28, t29, t30, t31, t32, t33, t34, t35, t36, t37, t38, t39, t40, t41, t42, t43, t44, t45));
+		
 		for(Tarefa t : listaTarefas){
 			if(!acaoTarefa.existsByTarefaId(t.getTarefaId())){ acaoTarefa.save(t); }
 		}
