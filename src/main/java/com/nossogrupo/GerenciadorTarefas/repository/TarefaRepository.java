@@ -15,12 +15,10 @@ import java.util.List;
 public interface TarefaRepository extends JpaRepository<Tarefa, Long>{ 
     public static final TaskUserRepository userAcao = null;
     boolean existsByTarefaId(Long tarefaId);
-    ArrayList <TarefaProjection> findAllBy(); //revisar uso depois
+    ArrayList <TarefaProjection> findAllBy(); 
     TarefaProjection findByTarefaId(Long tarefaId); 
     List<TarefaProjection> findByUserUserId(Long userId);
     void deleteByTarefaId(Long tarefaId);
-
-    //talvez precisem de mais com filtros
     List<TarefaProjection> findByTituloContaining(String termo);
 
     @Query(value = "SELECT * FROM tarefa JOIN task_user ON task_user.user_id = tarefa.user_id WHERE task_user.user_id = :userId AND LOWER(tarefa.titulo) LIKE %:pesquisa%",
