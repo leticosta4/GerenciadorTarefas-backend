@@ -28,12 +28,14 @@ public class TaskUser {
 
     public TaskUser() {} //construtor padrao jpa
     
-    public TaskUser(Long userId, String nome) {
+    public TaskUser(Long userId, String nome, String email, String senha) {
         this.userId = userId; 
         this.nome = nome;
+        this.email = email;
+        this.senha = senha;
     }; //para facilitar o envio no front - rastreamento pleo id
 
-    public TaskUser(Long userId, String nome, String email, String senha){
+    public TaskUser(Long userId, String nome, String email, String senha, List<Tarefa> listaTarefasUser){
         this.userId = userId; 
         this.nome = nome;
         this.email = email;

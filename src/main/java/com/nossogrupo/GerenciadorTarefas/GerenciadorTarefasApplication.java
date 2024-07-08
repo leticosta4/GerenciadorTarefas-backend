@@ -40,10 +40,10 @@ public class GerenciadorTarefasApplication implements CommandLineRunner{
 		}
 		listaColaboradores.clear();
 
-		TaskUser u1 = new TaskUser((long) 1, "Let", "leticiacostaoa@gmail.com", "123456");
-        TaskUser u2 = new TaskUser((long) 2, "Alysson", "alyssonoliveira456@gmail.com", "654321");
-        TaskUser u3 = new TaskUser((long) 3, "Kaik", "kaikcpereira@gmail.com", "1142878");
-        TaskUser u4 = new TaskUser((long) 4, "Cainan", "cainan.bas@gmail.com", "1109876");
+		TaskUser u1 = new TaskUser((long) 1, "Let", "leticiacostaoa@gmail.com", "123456", null);
+        TaskUser u2 = new TaskUser((long) 2, "Alysson", "alyssonoliveira456@gmail.com", "654321", null);
+        TaskUser u3 = new TaskUser((long) 3, "Kaik", "kaikcpereira@gmail.com", "1142878", null);
+        TaskUser u4 = new TaskUser((long) 4, "Cainan", "cainan.bas@gmail.com", "1109876", null);
 		listaUsers.addAll(Arrays.asList(u1, u2, u3, u4));
 
 		for(TaskUser u : listaUsers){

@@ -37,7 +37,7 @@ public class UserService {
                 acaoUser.save(user); 
                 mensagem.setMensagem("user encontrado");
 
-                TaskUser userJsonSimples = new TaskUser(user.getUserId(), user.getNome());
+                TaskUser userJsonSimples = new TaskUser(user.getUserId(), user.getNome(), user.getEmail(), user.getSenha());
 
                 return new ResponseEntity<>(userJsonSimples, HttpStatus.OK);
             }
@@ -66,7 +66,7 @@ public class UserService {
         return new ResponseEntity<>(mensagem, HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<?> editarContaUser(String stringUserId, TaskUser usuario){ //ta deixando acessar id de user nao existente - ta meio bugado
+    public ResponseEntity<?> editarContaUser(String stringUserId, TaskUser usuario){ // - ta meio bugado
         Long userId;
         Boolean encontrouUserNaLista = false;
         try {
