@@ -81,6 +81,7 @@ public class UserService {
         
         for(TaskUser user : listaUsers){
             if(user.getUserId() == userId){
+                usuario.setListaTarefasUser(user.getListaTarefasUser());
                 encontrouUserNaLista = true;
                 break;
             } 
