@@ -1,5 +1,11 @@
 # Gerenciador de Tarefas - backend
 Backend da Aplicação Web de Gerenciador de Tarefas com Spring Boot (Java) e MySQL - LP3 
+
+## Alerta
+Sempre que mexer/alterar qualquer coisa relacionado ao banco de dados, checar o arquivo `application.properties` para adicionar a senha do seu banco de dados, e também para caso precise de mais alguma configuração ou alteração em alguma existente.
+
+E também é feito o uso de jakarta em vez de javax para as dependênicas.explicação: https://stackoverflow.com/questions/15598210/the-import-javax-persistence-cannot-be-resolved
+
 ## Estrutura MVC
 O projeto possui 3 tabelas no banco de dados, que são tratadas como classes na estrutura da aplicação. São elas:
  - Classe Tarefa
@@ -31,11 +37,6 @@ No caso do colaborador em específico, a classe só é usada para mandar informa
 
 #### Repository
 A pasta repository contém interfaces que gerenciam a interação com o banco de dados. É feito o uso do Spring Data JPA (`JpaRepository`) para fornecer métodos de acesso a dados, como salvar, deletar, atualizar e buscar registros. Cada interface é nomeada com o nome da classe que referencia concatenado com o termo 'Repository'.
-
-## Alerta
-Sempre que mexer/alterar qualquer coisa relacionado ao banco de dados, checar o arquivo `application.properties` caso precise de mais alguma configuração ou alteração em alguma existente
-
-E também é feito o uso de jakarta em vez de javax para as dependênicas.explicação: https://stackoverflow.com/questions/15598210/the-import-javax-persistence-cannot-be-resolved
 
 ## Principais tecnologias
 Spring boot versão 3.3.1
