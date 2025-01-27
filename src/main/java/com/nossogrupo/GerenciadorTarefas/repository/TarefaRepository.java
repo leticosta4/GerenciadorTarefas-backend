@@ -21,7 +21,7 @@ public interface TarefaRepository extends JpaRepository<Tarefa, Long>{
     void deleteByTarefaId(Long tarefaId);
     List<TarefaProjection> findByTituloContaining(String termo);
 
-    @Query(value = "SELECT * FROM tarefa JOIN task_user ON task_user.user_id = tarefa.user_id WHERE task_user.user_id = :userId AND LOWER(tarefa.titulo) LIKE %:pesquisa%",
+    @Query(value = "SELECT * FROM tarefa JOIN task_user ON task_user.user_id = tarefa.user_id WHERE task_user.user_id = :userId AND LOWER(tarefa.titulo) LIKE CONCAT('%', :pesquisa, '%')",
        nativeQuery = true)
     List<TarefaProjection> findByUserIdAndTituloContaining(Long userId, String pesquisa);
 
